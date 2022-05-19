@@ -8,11 +8,21 @@
     <title>Todolist</title>
 </head>
 <body>
-    <form name="demo">
-        <input type="text" id="fname" name="fname">
-        <button type="button" onclick="myFunction()">Add</button><br>
-        
-    </form>
-    <script src="./main.js"></script>    
+    <div name="demo">
+        <input type="text" id = "taskInput">
+        <button type="button" value="tasklist" onclick="listWord()">Add</button><br>
+        <ul>
+            <p>chay bo</p>
+            <p>an sang</p>
+            <p>di boi</p>
+            <p id="render"></p>
+        </ul>       
+    </div>
+    <script>
+        function listWord() {
+            let str = document.getElementById('taskInput').value;
+            document.getElementById('render').innerHTML = str;
+        }
+    </script>    
 </body>
 </html>
