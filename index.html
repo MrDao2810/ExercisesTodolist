@@ -13,19 +13,24 @@
         <button onclick="newElement()" class="addBtn">Add</button>
     </div>
     <p id="myUL"></p>
-    <span onclick="deleteElement()" id="clickRemove"></span>
     <script>
-        
+
+        let tasks = ['di hoc', 'choi game'];
+        // let tasks = [
+        //     {task: 'di hoc', checked: false},
+        //     {task: 'choi game', checked: true},
+        // ]
+
         function newElement() {
             
             // Tạo node p
             let p = document.createElement('P');
 
             // Lấy giá trị người dùng nhập
-            let listTasksElement = document.getElementById('myInput').value;
+            let listTaskString = document.getElementById('myInput').value;
             
-            // Tạo dối tượng text node . chỗ này chưa hiểu kỹ
-            let t = document.createTextNode(listTasksElement);
+            // Tạo dối tượng text node 
+            let t = document.createTextNode(listTaskString);
 
             // Tạo thẻ input
             let checkBoxElement = document.createElement('input');
@@ -40,14 +45,21 @@
             p.appendChild(t);
             document.getElementById('myUL').appendChild(p);
 
-            let span = document.createElement('SPAN');
+            // tạo thẻ input
+            let tasksDelete = document.createElement('button');
 
+            tasksDelete.innerHTML = 'Delete'; // <button onclick="process">Hello</button>
+            tasksDelete.addEventListener('click', function(event) {
+                p.remove();
+            });
+            // thêm vào sau p
+            p.append(tasksDelete);
+            tasks.push(listTaskString);
+            // console.log(listTaskString);
             // Xoá giá trị thẻ input sau khi nhập
             document.getElementById('myInput').value = '';
         }
-        function deleteElement() {
 
-        }
     </script>    
 </body>
 </html>
