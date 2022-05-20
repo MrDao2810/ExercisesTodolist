@@ -5,23 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" src="./style.css">
-    <title>Todolist</title>
+    <title>Todo List</title>
 </head>
 <body>
-    <div name="demo">
-        <input type="text" id = "taskInput">
-        <button type="button" value="tasklist" onclick="listWord()">Add</button><br>
-        <ul>
-            <p>chay bo</p>
-            <p>an sang</p>
-            <p>di boi</p>
-            <p id="render"></p>
-        </ul>       
+    <div id="myDIV" class="header">
+        <input type="text" id="myInput" placeholder="add list">
+        <button onclick="newElement()" class="addBtn">Add</button>
     </div>
+    <p id="myUL"></p>
+    <span onclick="deleteElement()" id="clickRemove"></span>
     <script>
-        function listWord() {
-            let str = document.getElementById('taskInput').value;
-            document.getElementById('render').innerHTML = str;
+        
+        function newElement() {
+            
+            // Tạo node p
+            let p = document.createElement('P');
+
+            // Lấy giá trị người dùng nhập
+            let listTasksElement = document.getElementById('myInput').value;
+            
+            // Tạo dối tượng text node . chỗ này chưa hiểu kỹ
+            let t = document.createTextNode(listTasksElement);
+
+            // Tạo thẻ input
+            let checkBoxElement = document.createElement('input');
+
+            // Cho input type = checkbox
+            checkBoxElement.setAttribute('type', 'checkbox');
+
+            // Thêm vào đầu của p
+            p.prepend(checkBoxElement); 
+
+            // Gán text node cho thẻ p vừa tạo
+            p.appendChild(t);
+            document.getElementById('myUL').appendChild(p);
+
+            let span = document.createElement('SPAN');
+
+            // Xoá giá trị thẻ input sau khi nhập
+            document.getElementById('myInput').value = '';
+        }
+        function deleteElement() {
+
         }
     </script>    
 </body>
