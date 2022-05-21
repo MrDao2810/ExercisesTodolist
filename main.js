@@ -1,4 +1,3 @@
-let tasks = [];
 let totalCount = 0;
 let doneCount = 0;
 let undoneCount = 0;
@@ -37,35 +36,39 @@ function newElement() {
     tasksDelete.innerHTML = 'Delete'; // <button onclick="process">Hello</button>
     // dùng addEvebtListener truyền vào 1 callback vd: click ='function(event)' 
     tasksDelete.addEventListener('click', function(event) {
+        const isDone = checkBoxElement.checked;
+        isDone ? --doneCount : --undoneCount;
         p.remove();
+        --totalCount;
+        updateDoneView();
     });
 
     checkBoxElement.addEventListener('change', function(e) {
         if (e.target.checked) {
             ++doneCount;
-            undoneCount = tasks.length - doneCount;
+            undoneCount = totalCount - doneCount;
+            p.style.color = 'blue';
         } else {
             --doneCount;
-            undoneCount = tasks.length - doneCount;
+            undoneCount = totalCount - doneCount;
+            p.style.color = 'black';
         }
-        updateDoneView(doneCount, undoneCount);
+        updateDoneView();
     });
     // thêm vào sau p
     p.append(tasksDelete);
-    tasks.push(listTaskString);
     // console.log(listTaskString);
     // Xoá giá trị thẻ input sau khi nhập
     document.getElementById('myInput').value = '';
     // In ra số lượng công việc đã add
-    totalList();
+    ++undoneCount;
+    ++totalCount;
+    updateDoneView();
 
 }
 
-function totalList() {
-    document.getElementById('total').innerHTML = 'Tất Cả : ' + tasks.length;
-}
-
-function updateDoneView(doneCount, undoneCount) {
+function updateDoneView() {
+    document.getElementById('total').innerHTML = 'Tất Cả : ' + totalCount;
     document.getElementById('done').innerHTML = 'Đã hoàn thành : ' + doneCount;
     document.getElementById('undone').innerHTML = 'Chưa hoàn thành : ' + undoneCount;
 }
