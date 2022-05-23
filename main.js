@@ -57,7 +57,7 @@ function newElement() {
         myUL.append(taskDiv);
     });
 
-    // Tạo button - button đổi chỗ element
+    // Tạo button - button đổi chỗ element lên trên
     // Dùng childNodes để lấy tất cả các nút con của listTaskString
     const children = myUL.childNodes; 
     let beforeElement = document.createElement('button');
@@ -69,6 +69,18 @@ function newElement() {
             return;
         } else {
             children[i].parentNode.insertBefore(children[i], children[i - 1]);
+        }
+    });
+    // Tạo button - button đổi chỗ element xuống dưới
+    let afterElement = document.createElement('button');
+    afterElement.innerHTML = 'After';
+    taskDiv.append(afterElement);
+    afterElement.addEventListener('click', function() {
+        const i = Array.from(children).indexOf(taskDiv);
+        if (i === 0) {
+            return;
+        } else {
+            children[i].parentNode.insertBefore(children[i + 1], children[i]);
         }
     });
 
