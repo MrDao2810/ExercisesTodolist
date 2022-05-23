@@ -1,44 +1,75 @@
 let totalCount = 0;
 let doneCount = 0;
 let undoneCount = 0;
+const myUL = document.getElementById('myUl');
     // let tasks = [
     //     {task: 'di hoc', checked: false},
     //     {task: 'choi game', checked: true},
     // ]
-
 function newElement() {
     
-    // Tạo node p
-    let p = document.createElement('P');
+    // Tạo node div
+    let taskDiv = document.createElement('div');
     // Lấy giá trị người dùng nhập
     let listTaskString = document.getElementById('myInput').value;   
     // Tạo dối tượng text node 
     let t = document.createTextNode(listTaskString);
-    // Xoá giá trị thẻ input sau khi nhập
+    // delete giá trị thẻ input sau khi nhập
     document.getElementById('myInput').value = '';
-    // Gán text node cho thẻ p vừa tạo
-    p.appendChild(t);
-    document.getElementById('myUL').appendChild(p);
+    // Gán text node cho div vừa tạo
+    taskDiv.appendChild(t);
+    myUL.appendChild(taskDiv);
 
-    // Tạo thẻ input
-    let checkBoxElement = document.createElement('INPUT');
+    // Tạo input - checkbox
+    let checkBoxElement = document.createElement('input');
     // Cho input type = checkbox
     checkBoxElement.setAttribute('type', 'checkbox');
-    // Thêm vào đầu của p
-    p.prepend(checkBoxElement); 
+    // add vào đầu của taskDiv
+    taskDiv.prepend(checkBoxElement); 
 
-    // tạo thẻ button 
-    let tasksDelete = document.createElement('BUTTON');
-    // thêm vào sau p
-    p.append(tasksDelete);
+    // Tạo button - nút Delete
+    let tasksDelete = document.createElement('button');
+    // add vào sau taskDiv
+    taskDiv.append(tasksDelete);
     tasksDelete.innerHTML = 'Delete'; // <button onclick="process">Hello</button>
-    // dùng addEvebtListener Thêm sự kiện cho đối tượng 
+    // dùng addEvebtListener add sự kiện cho đối tượng 
     tasksDelete.addEventListener('click', function(event) {
         const isDone = checkBoxElement.checked;
         isDone ? --doneCount : --undoneCount;
-        p.remove();
+        taskDiv.remove();
         --totalCount;
         updateDoneView();
+    });
+
+    // Tạo Button - button lên top
+    let topElement = document.createElement('button');
+    topElement.innerHTML = 'Top';
+    taskDiv.append(topElement);
+    topElement.addEventListener('click', function() {
+        myUL.prepend(taskDiv);
+    });
+
+    // Tạo Button - button xuống dưới cùng
+    let bottomElement = document.createElement('button');
+    bottomElement.innerHTML = 'Bottom';
+    taskDiv.append(bottomElement);
+    bottomElement.addEventListener('click', function() {
+        myUL.append(taskDiv);
+    });
+
+    // Tạo button - button đổi chỗ element
+    // Dùng childNodes để lấy tất cả các nút con của listTaskString
+    const children = myUL.childNodes; 
+    let beforeElement = document.createElement('button');
+    beforeElement.innerHTML = 'Up';
+    taskDiv.append(beforeElement);
+    beforeElement.addEventListener('click', function() {
+        const i = Array.from(children).indexOf(taskDiv);
+        if (i === 0) {
+            return;
+        } else {
+            children[i].parentNode.insertBefore(children[i], children[i - 1]);
+        }
     });
 
     // khi checkBoxElement (checkbox) được click thì sẽ gọi hàm 
@@ -47,11 +78,11 @@ function newElement() {
         if (e.target.checked) {
             ++doneCount;
             undoneCount = totalCount - doneCount;
-            p.style.color = 'blue';
+            taskDiv.style.color = 'blue';
         } else {
             --doneCount;
             undoneCount = totalCount - doneCount;
-            p.style.color = 'black';
+            taskDiv.style.color = 'black';
         }
         updateDoneView();
     });
@@ -77,24 +108,24 @@ function updateDoneView() {
 // document.addEventListener('dragend', function() { // bắt đầu khi có sự kiện kéo - và chạy liên tục từ khi kích hoạt
 //     console.log('nha chuot - ket thuc keo');
 // });
-// document.addEventListener('dragenter', function(e){
+// document.addEventListener('dragenter', function(e) {
 //     if (e.target.id == 'myUL') {
 //         console.log('hung su kien');
 //     }
 // });
-// document.addEventListener('dragover', function(e){
+// document.addEventListener('dragover', function(e) {
 //     e.preventDefault();
 //     // if (e.target.id == 'myUL') {
 //     //     console.log('dang chay su kien hung drag');
 //     // }
 // });
-// document.addEventListener('dragleave', function(e){
+// document.addEventListener('dragleave', function(e) {
 //     if (e.target.id == 'myUL') {
 
 //     }
 //     // console.log('nha chuot ket thuc hung keo');
 // });
-// document.addEventListener('drop', function(e){
+// document.addEventListener('drop', function(e) {
 //     e.preventDefault();
 //     if (e.target.className == 'element') {
 //         let data = e.dataTransfer.getData('myUL');
