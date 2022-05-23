@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" src="./style.css">
+    <link rel="stylesheet" href="styles.css">
     <title>Todo List</title>
 </head>
 <body>
-    <div id="myDIV" class="header">
-        <p id="total"> Tất Cả :</p>
-        <p id="done"> Đã hoàn thành :</p>
-        <p id="undone">Chưa hoàn thành :</p>    
-        <input type="text" id="myInput" placeholder="add list">
+    <div id="myDiv" class="header">
+        <button id="total">Tất Cả : 0</button>
+        <button id="done">Đã hoàn thành : 0</button>
+        <button id="undone">Chưa hoàn thành : 0</button> </br>
+        <input type="text" class="listText" id="myInput">
         <button onclick="newElement()" class="addBtn">Add</button>
-        <p class="element" id="myUL"></p>
+        <div class = "header-content" id="myUl"></div>
     </div>
     <script src="./main.js"></script>    
 </body>
