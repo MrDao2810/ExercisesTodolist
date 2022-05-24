@@ -1,8 +1,25 @@
 .header {
     margin-top: 30px;    
 }
-.header button{
-    margin-left: 5px;
+.header-content .my-delete-element{
+    left: 400px;    
+    position: absolute;
+}
+.header-content .my-top-element{
+    left: 458px;
+    position: absolute;
+}
+.header-content .my-bot-element{
+    left: 500px;
+    position: absolute;
+}
+.header-content .my-before-element{
+    left: 563px;
+    position: absolute;
+}
+.header-content .my-down-element{
+    left: 600px;
+    position: absolute;
 }
 .listText {
     margin-top: 30px;
