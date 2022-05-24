@@ -2,23 +2,23 @@
     margin-top: 30px;    
 }
 .header-content .my-delete-element{
-    left: 400px;    
+    left: 300px;    
     position: absolute;
 }
 .header-content .my-top-element{
-    left: 458px;
+    left: 358px;
     position: absolute;
 }
 .header-content .my-bot-element{
-    left: 500px;
+    left: 400px;
     position: absolute;
 }
 .header-content .my-before-element{
-    left: 563px;
+    left: 463px;
     position: absolute;
 }
 .header-content .my-down-element{
-    left: 600px;
+    left: 500px;
     position: absolute;
 }
 .listText {

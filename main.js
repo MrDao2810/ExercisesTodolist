@@ -1,10 +1,9 @@
 let totalCount = 0;
 let doneCount = 0;
-let undoneCount = 0;
+let unDoneCount = 0;
 const myUL = document.getElementById('myUl');
 
-function newElement() {
-    
+function newElement() {    
     // Tạo node div
     let taskDiv = document.createElement('div');
     // Lấy giá trị người dùng nhập
@@ -40,7 +39,7 @@ function newElement() {
     const children = myUL.childNodes; 
     let beforeElement = document.createElement('button');
     beforeElement.className = 'my-before-element';
-    beforeElement.innerHTML = 'Up';
+    beforeElement.innerHTML = '⬆';
     taskDiv.append(beforeElement);
     beforeElement.addEventListener('click', function() {
         const i = Array.from(children).indexOf(taskDiv);
@@ -53,7 +52,7 @@ function newElement() {
     // Tạo button - button đổi chỗ element xuống dưới
     let downElement = document.createElement('button');
     downElement.className = 'my-down-element';
-    downElement.innerHTML = 'Down';
+    downElement.innerHTML = '⬇';
     taskDiv.append(downElement);
     downElement.addEventListener('click', function() {
         const i = Array.from(children).indexOf(taskDiv);
@@ -65,24 +64,24 @@ function newElement() {
     });
     clickElement(taskDiv);
 }
-//Tạo checkbox và thêm tính năng cho chúng
+// Tạo checkbox và thêm tính năng cho chúng
 function clickElement(taskDiv) {
     // Tạo input - checkbox
     let checkBoxElement = document.createElement('input');
     // Cho input type = checkbox
     checkBoxElement.setAttribute('type', 'checkbox');
-    // add vào đầu của taskDiv
+    // Add vào đầu của taskDiv
     taskDiv.prepend(checkBoxElement);
     // Tạo button - nút Delete
     let tasksDelete = document.createElement('button');
     tasksDelete.className = 'my-delete-element';
-    // add vào sau taskDiv
+    // Add vào sau taskDiv
     taskDiv.append(tasksDelete);
-    tasksDelete.innerHTML = 'Delete'; // <button onclick="process">Hello</button>
-    // dùng addEvebtListener add sự kiện cho đối tượng 
+    tasksDelete.innerHTML = '🗑️'; // <button onclick="process">Hello</button>
+    // Dùng addEvebtListener add sự kiện cho đối tượng 
     tasksDelete.addEventListener('click', function(event) {
         const isDone = checkBoxElement.checked;
-        isDone ? --doneCount : --undoneCount;
+        isDone ? --doneCount : --unDoneCount;
         taskDiv.remove();
         --totalCount;
         updateDoneView();
@@ -90,20 +89,20 @@ function clickElement(taskDiv) {
 
     // khi checkBoxElement (checkbox) được click thì sẽ gọi hàm 
     checkBoxElement.addEventListener('change', function(e) {
-        // target là thằng cuối cùng mà mình click vào
+        // Target là thằng cuối cùng mà mình click vào
         if (e.target.checked) {
             ++doneCount;
-            undoneCount = totalCount - doneCount;
+            unDoneCount = totalCount - doneCount;
             taskDiv.style.color = 'blue';
         } else {
             --doneCount;
-            undoneCount = totalCount - doneCount;
+            unDoneCount = totalCount - doneCount;
             taskDiv.style.color = 'black';
         }
         updateDoneView();
     });
     // In ra số lượng công việc đã add
-    ++undoneCount;
+    ++unDoneCount;
     ++totalCount;
     updateDoneView();
 }
@@ -111,41 +110,16 @@ function clickElement(taskDiv) {
 function updateDoneView() {
     document.getElementById('total').innerHTML = 'Tất Cả : ' + totalCount;
     document.getElementById('done').innerHTML = 'Đã hoàn thành : ' + doneCount;
-    document.getElementById('undone').innerHTML = 'Chưa hoàn thành : ' + undoneCount;
+    document.getElementById('undone').innerHTML = 'Chưa hoàn thành : ' + unDoneCount;
+}
+function totalElement() {
+
 }
 
-// document.addEventListener('dragstart', function(e) { // bắt đầu khi có sự kiện kéo - chỉ sảy ra 1 lần từ khi kích hoạt
-//     e.dataTransfer.setData('myData', e.target.id);
-//     // console.log('keo');
-// });
-// document.addEventListener('drag', function() { // bắt đầu khi thả chuột, kết thúc sự kiện kéo
-//     // console.log('dang chay');
-// });
-// document.addEventListener('dragend', function() { // bắt đầu khi có sự kiện kéo - và chạy liên tục từ khi kích hoạt
-//     console.log('nha chuot - ket thuc keo');
-// });
-// document.addEventListener('dragenter', function(e) {
-//     if (e.target.id == 'myUL') {
-//         console.log('hung su kien');
-//     }
-// });
-// document.addEventListener('dragover', function(e) {
-//     e.preventDefault();
-//     // if (e.target.id == 'myUL') {
-//     //     console.log('dang chay su kien hung drag');
-//     // }
-// });
-// document.addEventListener('dragleave', function(e) {
-//     if (e.target.id == 'myUL') {
+function doneElement() {
 
-//     }
-//     // console.log('nha chuot ket thuc hung keo');
-// });
-// document.addEventListener('drop', function(e) {
-//     e.preventDefault();
-//     if (e.target.className == 'element') {
-//         let data = e.dataTransfer.getData('myUL');
-//         e.target.appendChild(document.getElementById(data));
-//     };
-//     console.log('nha thong tin');
-// });
+}
+
+function unDoneElement() {
+
+}

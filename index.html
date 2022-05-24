@@ -9,9 +9,9 @@
 </head>
 <body>
     <div id="myDiv" class="header">
-        <button id="total">Tất Cả : 0</button>
-        <button id="done">Đã hoàn thành : 0</button>
-        <button id="undone">Chưa hoàn thành : 0</button> </br>
+        <button id="total" onclick="totalElement()">Tất Cả : 0</button>
+        <button id="done" onclick="doneElement()">Đã hoàn thành : 0</button>
+        <button id="undone" onclick="unDoneElement()">Chưa hoàn thành : 0</button> </br>
         <input type="text" class="listText" id="myInput">
         <button onclick="newElement()" class="addBtn">Add</button>
         <div class = "header-content" id="myUl"></div>
