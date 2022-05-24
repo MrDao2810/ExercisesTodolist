@@ -2,10 +2,7 @@ let totalCount = 0;
 let doneCount = 0;
 let undoneCount = 0;
 const myUL = document.getElementById('myUl');
-    // let tasks = [
-    //     {task: 'di hoc', checked: false},
-    //     {task: 'choi game', checked: true},
-    // ]
+
 function newElement() {
     
     // Tạo node div
@@ -13,11 +10,11 @@ function newElement() {
     // Lấy giá trị người dùng nhập
     let listTaskString = document.getElementById('myInput').value;   
     // Tạo dối tượng text node 
-    let t = document.createTextNode(listTaskString);
+    let text = document.createTextNode(listTaskString);
     // delete giá trị thẻ input sau khi nhập
     document.getElementById('myInput').value = '';
     // Gán text node cho div vừa tạo
-    taskDiv.appendChild(t);
+    taskDiv.appendChild(text);
     myUL.appendChild(taskDiv);
 
     // Tạo input - checkbox
@@ -29,6 +26,7 @@ function newElement() {
 
     // Tạo button - nút Delete
     let tasksDelete = document.createElement('button');
+    tasksDelete.className = 'my-delete-element';
     // add vào sau taskDiv
     taskDiv.append(tasksDelete);
     tasksDelete.innerHTML = 'Delete'; // <button onclick="process">Hello</button>
@@ -43,6 +41,7 @@ function newElement() {
 
     // Tạo Button - button lên top
     let topElement = document.createElement('button');
+    topElement.className = 'my-top-element'
     topElement.innerHTML = 'Top';
     taskDiv.append(topElement);
     topElement.addEventListener('click', function() {
@@ -51,6 +50,7 @@ function newElement() {
 
     // Tạo Button - button xuống dưới cùng
     let bottomElement = document.createElement('button');
+    bottomElement.className = 'my-bot-element';
     bottomElement.innerHTML = 'Bottom';
     taskDiv.append(bottomElement);
     bottomElement.addEventListener('click', function() {
@@ -61,6 +61,7 @@ function newElement() {
     // Dùng childNodes để lấy tất cả các nút con của listTaskString
     const children = myUL.childNodes; 
     let beforeElement = document.createElement('button');
+    beforeElement.className = 'my-before-element';
     beforeElement.innerHTML = 'Up';
     taskDiv.append(beforeElement);
     beforeElement.addEventListener('click', function() {
@@ -72,10 +73,11 @@ function newElement() {
         }
     });
     // Tạo button - button đổi chỗ element xuống dưới
-    let afterElement = document.createElement('button');
-    afterElement.innerHTML = 'After';
-    taskDiv.append(afterElement);
-    afterElement.addEventListener('click', function() {
+    let downElement = document.createElement('button');
+    downElement.className = 'my-down-element';
+    downElement.innerHTML = 'Down';
+    taskDiv.append(downElement);
+    downElement.addEventListener('click', function() {
         const i = Array.from(children).indexOf(taskDiv);
         if (i === 0) {
             return;
