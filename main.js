@@ -17,28 +17,6 @@ function newElement() {
     taskDiv.appendChild(text);
     myUL.appendChild(taskDiv);
 
-    // Tạo input - checkbox
-    let checkBoxElement = document.createElement('input');
-    // Cho input type = checkbox
-    checkBoxElement.setAttribute('type', 'checkbox');
-    // add vào đầu của taskDiv
-    taskDiv.prepend(checkBoxElement); 
-
-    // Tạo button - nút Delete
-    let tasksDelete = document.createElement('button');
-    tasksDelete.className = 'my-delete-element';
-    // add vào sau taskDiv
-    taskDiv.append(tasksDelete);
-    tasksDelete.innerHTML = 'Delete'; // <button onclick="process">Hello</button>
-    // dùng addEvebtListener add sự kiện cho đối tượng 
-    tasksDelete.addEventListener('click', function(event) {
-        const isDone = checkBoxElement.checked;
-        isDone ? --doneCount : --undoneCount;
-        taskDiv.remove();
-        --totalCount;
-        updateDoneView();
-    });
-
     // Tạo Button - button lên top
     let topElement = document.createElement('button');
     topElement.className = 'my-top-element'
@@ -84,6 +62,30 @@ function newElement() {
         } else {
             children[i].parentNode.insertBefore(children[i + 1], children[i]);
         }
+    });
+    clickElement(taskDiv);
+}
+//Tạo checkbox và thêm tính năng cho chúng
+function clickElement(taskDiv) {
+    // Tạo input - checkbox
+    let checkBoxElement = document.createElement('input');
+    // Cho input type = checkbox
+    checkBoxElement.setAttribute('type', 'checkbox');
+    // add vào đầu của taskDiv
+    taskDiv.prepend(checkBoxElement);
+    // Tạo button - nút Delete
+    let tasksDelete = document.createElement('button');
+    tasksDelete.className = 'my-delete-element';
+    // add vào sau taskDiv
+    taskDiv.append(tasksDelete);
+    tasksDelete.innerHTML = 'Delete'; // <button onclick="process">Hello</button>
+    // dùng addEvebtListener add sự kiện cho đối tượng 
+    tasksDelete.addEventListener('click', function(event) {
+        const isDone = checkBoxElement.checked;
+        isDone ? --doneCount : --undoneCount;
+        taskDiv.remove();
+        --totalCount;
+        updateDoneView();
     });
 
     // khi checkBoxElement (checkbox) được click thì sẽ gọi hàm 
