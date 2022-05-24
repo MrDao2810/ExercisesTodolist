@@ -39,7 +39,7 @@ function newElement() {
     const children = myUL.childNodes; 
     let beforeElement = document.createElement('button');
     beforeElement.className = 'my-before-element';
-    beforeElement.innerHTML = '⬆';
+    beforeElement.innerHTML = 'top';
     taskDiv.append(beforeElement);
     beforeElement.addEventListener('click', function() {
         const i = Array.from(children).indexOf(taskDiv);
@@ -52,7 +52,7 @@ function newElement() {
     // Tạo button - button đổi chỗ element xuống dưới
     let downElement = document.createElement('button');
     downElement.className = 'my-down-element';
-    downElement.innerHTML = '⬇';
+    downElement.innerHTML = 'down';
     taskDiv.append(downElement);
     downElement.addEventListener('click', function() {
         const i = Array.from(children).indexOf(taskDiv);

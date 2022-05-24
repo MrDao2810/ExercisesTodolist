@@ -6,19 +6,19 @@
     position: absolute;
 }
 .header-content .my-top-element{
-    left: 358px;
+    left: 340px;
     position: absolute;
 }
 .header-content .my-bot-element{
-    left: 400px;
+    left: 385px;
     position: absolute;
 }
 .header-content .my-before-element{
-    left: 463px;
+    left: 450px;
     position: absolute;
 }
 .header-content .my-down-element{
-    left: 500px;
+    left: 480px;
     position: absolute;
 }
 .listText {
