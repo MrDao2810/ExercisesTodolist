@@ -1,24 +1,24 @@
 let totalCount = 0;
 let doneCount = 0;
 let undoneCount = 0;
-const myUL = document.getElementById('myUl');
-    // let tasks = [
-    //     {task: 'di hoc', checked: false},
-    //     {task: 'choi game', checked: true},
-    // ]
-function newElement() {
-    
+const myList = document.getElementById('myUl'); // todo: Đổi lại tên cho ý nghĩa hơn vd: myList
+
+
+
+//todo: tách nhỏ function
+function elementCreate() {
     // Tạo node div
     let taskDiv = document.createElement('div');
+    taskDiv.className = 'taskDiv'; //Thêm 1 class cho div
     // Lấy giá trị người dùng nhập
     let listTaskString = document.getElementById('myInput').value;   
     // Tạo dối tượng text node 
-    let t = document.createTextNode(listTaskString);
+    let text = document.createTextNode(listTaskString); //todo: t nghĩa là text
     // delete giá trị thẻ input sau khi nhập
     document.getElementById('myInput').value = '';
     // Gán text node cho div vừa tạo
-    taskDiv.appendChild(t);
-    myUL.appendChild(taskDiv);
+    taskDiv.appendChild(text);
+    myList.appendChild(taskDiv);
 
     // Tạo input - checkbox
     let checkBoxElement = document.createElement('input');
@@ -29,10 +29,11 @@ function newElement() {
 
     // Tạo button - nút Delete
     let tasksDelete = document.createElement('button');
+    tasksDelete.className = 'taskDelete';
     // add vào sau taskDiv
     taskDiv.append(tasksDelete);
     tasksDelete.innerHTML = 'Delete'; // <button onclick="process">Hello</button>
-    // dùng addEvebtListener add sự kiện cho đối tượng 
+    // dùng addEventListener add sự kiện cho đối tượng 
     tasksDelete.addEventListener('click', function(event) {
         const isDone = checkBoxElement.checked;
         isDone ? --doneCount : --undoneCount;
@@ -46,7 +47,7 @@ function newElement() {
     topElement.innerHTML = 'Top';
     taskDiv.append(topElement);
     topElement.addEventListener('click', function() {
-        myUL.prepend(taskDiv);
+        myList.prepend(taskDiv);
     });
 
     // Tạo Button - button xuống dưới cùng
@@ -54,12 +55,12 @@ function newElement() {
     bottomElement.innerHTML = 'Bottom';
     taskDiv.append(bottomElement);
     bottomElement.addEventListener('click', function() {
-        myUL.append(taskDiv);
+        myList.append(taskDiv);
     });
 
     // Tạo button - button đổi chỗ element lên trên
     // Dùng childNodes để lấy tất cả các nút con của listTaskString
-    const children = myUL.childNodes; 
+    const children = myList.childNodes; 
     let beforeElement = document.createElement('button');
     beforeElement.innerHTML = 'Up';
     taskDiv.append(beforeElement);
@@ -109,39 +110,3 @@ function updateDoneView() {
     document.getElementById('done').innerHTML = 'Đã hoàn thành : ' + doneCount;
     document.getElementById('undone').innerHTML = 'Chưa hoàn thành : ' + undoneCount;
 }
-
-// document.addEventListener('dragstart', function(e) { // bắt đầu khi có sự kiện kéo - chỉ sảy ra 1 lần từ khi kích hoạt
-//     e.dataTransfer.setData('myData', e.target.id);
-//     // console.log('keo');
-// });
-// document.addEventListener('drag', function() { // bắt đầu khi thả chuột, kết thúc sự kiện kéo
-//     // console.log('dang chay');
-// });
-// document.addEventListener('dragend', function() { // bắt đầu khi có sự kiện kéo - và chạy liên tục từ khi kích hoạt
-//     console.log('nha chuot - ket thuc keo');
-// });
-// document.addEventListener('dragenter', function(e) {
-//     if (e.target.id == 'myUL') {
-//         console.log('hung su kien');
-//     }
-// });
-// document.addEventListener('dragover', function(e) {
-//     e.preventDefault();
-//     // if (e.target.id == 'myUL') {
-//     //     console.log('dang chay su kien hung drag');
-//     // }
-// });
-// document.addEventListener('dragleave', function(e) {
-//     if (e.target.id == 'myUL') {
-
-//     }
-//     // console.log('nha chuot ket thuc hung keo');
-// });
-// document.addEventListener('drop', function(e) {
-//     e.preventDefault();
-//     if (e.target.className == 'element') {
-//         let data = e.dataTransfer.getData('myUL');
-//         e.target.appendChild(document.getElementById(data));
-//     };
-//     console.log('nha thong tin');
-// });
