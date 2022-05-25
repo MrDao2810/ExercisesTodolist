@@ -2,7 +2,8 @@ let totalCount = 0;
 let doneCount = 0;
 let unDoneCount = 0;
 const myUL = document.getElementById('myUl');
-const inputElement = document.getElementById('addBtn');
+const inputElement = document.getElementById('myBtn');
+const input = document.getElementById('myInput');
 
 function newElement() {    
     // Tạo node div
@@ -13,6 +14,7 @@ function newElement() {
     if (listTaskString === '') {
         return;
     }
+
     // Tạo dối tượng text node 
     let text = document.createTextNode(listTaskString);
     // delete giá trị thẻ input sau khi nhập
@@ -53,6 +55,7 @@ function newElement() {
             children[i].parentNode.insertBefore(children[i], children[i - 1]);
         }
     });
+
     // Tạo button - button đổi chỗ element xuống dưới
     let downElement = document.createElement('button');
     downElement.className = 'my-down-element';
@@ -66,11 +69,18 @@ function newElement() {
             children[i].parentNode.insertBefore(children[i + 1], children[i]);
         }
     });
-    clickElement(taskDiv);
+    createCheckBox(taskDiv);
 }
 
+// Bắt sự kiện khi nhấn Enter
+input.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        newElement();
+    }
+});
+
 // Tạo checkbox và thêm tính năng cho chúng
-function clickElement(taskDiv) {
+function createCheckBox(taskDiv) {
     // Tạo input - checkbox
     let checkBoxElement = document.createElement('input');
     // Cho input type = checkbox
@@ -132,6 +142,8 @@ function checkAllElements(taskDiv) {
         }
     } 
 }
+
+
 
 function updateDoneView() {
     document.getElementById('total').innerHTML = 'Tất Cả : ' + totalCount;
