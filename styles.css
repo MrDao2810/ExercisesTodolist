@@ -1,5 +1,11 @@
+body {
+    background-color:aliceblue;
+}
 .header {
     margin-top: 30px;    
+}
+.header .addBtn:active {
+    background-color: rgb(165, 165, 165);
 }
 .header-content .my-delete-element{
     left: 300px;    
@@ -18,7 +24,7 @@
     position: absolute;
 }
 .header-content .my-down-element{
-    left: 480px;
+    left: 490px;
     position: absolute;
 }
 .listText {

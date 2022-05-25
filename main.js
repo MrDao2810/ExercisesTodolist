@@ -2,12 +2,16 @@ let totalCount = 0;
 let doneCount = 0;
 let unDoneCount = 0;
 const myUL = document.getElementById('myUl');
-
+const inputElement = document.getElementById('addBtn');
 function newElement() {    
     // Tạo node div
     let taskDiv = document.createElement('div');
     // Lấy giá trị người dùng nhập
     let listTaskString = document.getElementById('myInput').value;   
+    // Nếu input rỗng thì button add sẽ không hoạt động
+    if (listTaskString === '') {
+        return;
+    }
     // Tạo dối tượng text node 
     let text = document.createTextNode(listTaskString);
     // delete giá trị thẻ input sau khi nhập
@@ -15,7 +19,6 @@ function newElement() {
     // Gán text node cho div vừa tạo
     taskDiv.appendChild(text);
     myUL.appendChild(taskDiv);
-
     // Tạo Button - button lên top
     let topElement = document.createElement('button');
     topElement.className = 'my-top-element'
@@ -64,6 +67,7 @@ function newElement() {
     });
     clickElement(taskDiv);
 }
+
 // Tạo checkbox và thêm tính năng cho chúng
 function clickElement(taskDiv) {
     // Tạo input - checkbox
@@ -78,7 +82,7 @@ function clickElement(taskDiv) {
     // Add vào sau taskDiv
     taskDiv.append(tasksDelete);
     tasksDelete.innerHTML = '🗑️'; // <button onclick="process">Hello</button>
-    // Dùng addEvebtListener add sự kiện cho đối tượng 
+    // Dùng addEventListener add sự kiện cho đối tượng 
     tasksDelete.addEventListener('click', function(event) {
         const isDone = checkBoxElement.checked;
         isDone ? --doneCount : --unDoneCount;
@@ -86,7 +90,6 @@ function clickElement(taskDiv) {
         --totalCount;
         updateDoneView();
     });
-
     // khi checkBoxElement (checkbox) được click thì sẽ gọi hàm 
     checkBoxElement.addEventListener('change', function(e) {
         // Target là thằng cuối cùng mà mình click vào
@@ -106,6 +109,14 @@ function clickElement(taskDiv) {
     ++totalCount;
     updateDoneView();
 }
+
+// function allElement(source) {
+//     let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+//     for (var i = 0; i < checkboxes.length; i++) {
+//         if (checkboxes[i] != source)
+//             checkboxes[i].checked = source.checked;
+//     }
+// }
 
 function updateDoneView() {
     document.getElementById('total').innerHTML = 'Tất Cả : ' + totalCount;
