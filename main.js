@@ -3,6 +3,7 @@ let doneCount = 0;
 let unDoneCount = 0;
 const myUL = document.getElementById('myUl');
 const inputElement = document.getElementById('addBtn');
+
 function newElement() {    
     // Tạo node div
     let taskDiv = document.createElement('div');
@@ -109,14 +110,28 @@ function clickElement(taskDiv) {
     ++totalCount;
     updateDoneView();
 }
-
-// function allElement(source) {
-//     let checkboxes = document.querySelectorAll('input[type="checkbox"]');
-//     for (var i = 0; i < checkboxes.length; i++) {
-//         if (checkboxes[i] != source)
-//             checkboxes[i].checked = source.checked;
-//     }
-// }
+// Chọn tất cả checkbox và bỏ chọn tất cả checkbox
+function checkAllElements(taskDiv) {
+    const buttonCheckAll = document.getElementById('btn-check-all');
+    const isCheck = buttonCheckAll.getAttribute('name');
+    let node_list = document.getElementsByTagName('input');
+    for (let i = 0; i < node_list.length; i++) 
+    {
+        let node = node_list[i];
+        if (node.getAttribute('type') == 'checkbox') 
+        {
+            if (isCheck === 'check') {
+                node.setAttribute('checked', true);
+                buttonCheckAll.setAttribute('name', 'uncheck');
+                buttonCheckAll.innerHTML = 'Bỏ chọn tất cả';
+            } else {
+                node.removeAttribute('checked');
+                buttonCheckAll.setAttribute('name', 'check');
+                buttonCheckAll.innerHTML = 'Chọn tất cả';
+            }
+        }
+    } 
+}
 
 function updateDoneView() {
     document.getElementById('total').innerHTML = 'Tất Cả : ' + totalCount;
