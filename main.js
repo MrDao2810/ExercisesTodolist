@@ -1,6 +1,10 @@
 let totalCount = 0;
 let doneCount = 0;
 let unDoneCount = 0;
+let today = new Date();
+let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+let time = today.getHours() + ":" + today.getMinutes();
+let dateTime = date + ' ' + time;
 const myUL = document.getElementById('myUl');
 const inputElement = document.getElementById('myBtn');
 const input = document.getElementById('myInput');
@@ -14,7 +18,6 @@ function newElement() {
     if (listTaskString === '') {
         return;
     }
-
     // Tạo dối tượng text node 
     let text = document.createTextNode(listTaskString);
     // delete giá trị thẻ input sau khi nhập
@@ -69,6 +72,8 @@ function newElement() {
             children[i].parentNode.insertBefore(children[i + 1], children[i]);
         }
     });
+    // let dateElement = document.createElement('div');
+    // document.getElementById('my-date').innerHTML = dateTime;
     createCheckBox(taskDiv);
 }
 
@@ -134,16 +139,20 @@ function checkAllElements(taskDiv) {
                 node.setAttribute('checked', true);
                 buttonCheckAll.setAttribute('name', 'uncheck');
                 buttonCheckAll.innerHTML = 'Bỏ chọn tất cả';
+                doneCount = totalCount;
+                unDoneCount = 0;
             } else {
                 node.removeAttribute('checked');
                 buttonCheckAll.setAttribute('name', 'check');
                 buttonCheckAll.innerHTML = 'Chọn tất cả';
+                node.style.color = 'black';
+                unDoneCount = totalCount;
+                doneCount = 0;
             }
+            updateDoneView();
         }
     } 
 }
-
-
 
 function updateDoneView() {
     document.getElementById('total').innerHTML = 'Tất Cả : ' + totalCount;
