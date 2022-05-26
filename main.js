@@ -16,6 +16,7 @@ function newElement() {
     let listTaskString = document.getElementById('myInput').value;   
     // Nếu input rỗng thì button add sẽ không hoạt động
     if (listTaskString === '') {
+        alert('Lỗi. Nhập lại');
         return;
     }
     // Tạo dối tượng text node 
@@ -48,7 +49,7 @@ function newElement() {
     const children = myUL.childNodes; 
     let beforeElement = document.createElement('button');
     beforeElement.className = 'my-before-element';
-    beforeElement.innerHTML = 'top';
+    beforeElement.innerHTML = 'Up';
     taskDiv.append(beforeElement);
     beforeElement.addEventListener('click', function() {
         const i = Array.from(children).indexOf(taskDiv);
@@ -62,7 +63,7 @@ function newElement() {
     // Tạo button - button đổi chỗ element xuống dưới
     let downElement = document.createElement('button');
     downElement.className = 'my-down-element';
-    downElement.innerHTML = 'down';
+    downElement.innerHTML = 'Down';
     taskDiv.append(downElement);
     downElement.addEventListener('click', function() {
         const i = Array.from(children).indexOf(taskDiv);
@@ -100,6 +101,7 @@ function createCheckBox(taskDiv) {
     tasksDelete.innerHTML = '🗑️'; // <button onclick="process">Hello</button>
     // Dùng addEventListener add sự kiện cho đối tượng 
     tasksDelete.addEventListener('click', function(event) {
+        alert('Bạn có chắc chắn muốn xoá');
         const isDone = checkBoxElement.checked;
         isDone ? --doneCount : --unDoneCount;
         taskDiv.remove();
