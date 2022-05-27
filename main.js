@@ -6,9 +6,18 @@ let todoList = [
 updateView();
 
 function updateView() {
+    // Xoá dữ liệu cũ và update lại data từ updateTodoListView()
     listTasksContainerElement.innerHTML = '';
     updateTodoListView();
 }
+
+let pressEnter = document.getElementById('list-tasks-content')
+// Bắt sự kiện khi nhấn Enter
+pressEnter.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        addContentElement();
+    }
+});
 
 function updateTodoListView() {
     for (let i = 0; i < todoList.length; i++) {
@@ -31,7 +40,7 @@ function addOneTaskView(task) {
     division.prepend(checkBox);
     division.appendChild(textNode);
     listTasksContainerElement.appendChild(division);
-    createDeleteElement(division); 
+    createDeleteElement(division, task); 
 }
 
 function addContentElement() {
@@ -41,20 +50,20 @@ function addContentElement() {
         alert('Lỗi. Nhập lại');
         return;
     }
+    for (let i = 0; i < todoList.length; i++) {
+        if (listTasksContent === todoList[i].content) {
+            alert('Nhập lại');
+            return;
+        }
+    }
     const newTask = {content: listTasksContent, status: false}
     todoList.push(newTask); 
+    // delete giá trị thẻ input sau khi nhập
+    document.getElementById('list-tasks-content').value = '';
     updateView(); 
 }    
-let pressEnter = document.getElementById('list-tasks-content')
-// Bắt sự kiện khi nhấn Enter
-pressEnter.addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        addContentElement();
-    }
-});
 
-
-function createDeleteElement(division) {
+function createDeleteElement(division, task) {
     // Tạo button - nút delete
     let taskDelete = document.createElement('button');
     // taskDelete.className = 'my-delete-element';
@@ -65,7 +74,11 @@ function createDeleteElement(division) {
     taskDelete.addEventListener('click', function(event){
         const confirmation = confirm('Bạn có chắc chắn muốn xoá không');
         if(!confirmation) return;
-        division.remove();
+        // Tìm vị trí của task trong todoList
+        const taskIndex = todoList.indexOf(task);
+        // Dùng Splice để xoá phần tử được xác định taskIndex trong mảng 
+        todoList.splice(taskIndex, 1);
+        updateView();        
     });
 }
 
