@@ -70,10 +70,16 @@ function createStaticCheckBox(division, task) {
         division.style.color = 'black';
     }
     // Khi checkbox được click thì gọi hàm 
-
     checkBox.addEventListener('change', function(e){
         // Target Nhận phần tử cuối cùng khi click vào checkbox
         task.status = e.target.checked;
+        const taskIndex = todoList.indexOf(task);
+        todoList.splice(taskIndex, 1);
+        if (task.status) {
+            todoList.push(task);
+        } else {
+            todoList.unshift(task);
+        }
         updateView();
     });
     division.prepend(checkBox);
@@ -105,15 +111,18 @@ function createOnTopElement(division, task) {
     taskTopElement.className = 'my-top-element';
     taskTopElement.innerHTML = 'Top';
     division.append(taskTopElement);
-
+    // Nếu vị trí của phần tử === 0 thì taskTopElement true còn không thì trả về false
     if (todoList.indexOf(task) === 0) {
         taskTopElement.disabled = true;
     }
 
     // Nếu click vào button thì sẽ đưa element lên trên đầu divison
     taskTopElement.addEventListener('click', function(){
+        // Tìm vị trí của task trong todoList
         const taskIndex = todoList.indexOf(task);
+        // Dùng Splice để xoá phần tử được xác định taskIndex trong mảng 
         todoList.splice(taskIndex, 1);
+        // Đưa task lên đầu mảng todoList
         todoList.unshift(task);
         updateView();
         // // Sau khi lên đầu thì vo hiệu hoá button đó
