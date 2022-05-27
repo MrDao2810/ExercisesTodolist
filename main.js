@@ -34,23 +34,23 @@ function addOneTaskView(task) {
     createDeleteElement(division); 
 }
 
-// function addContentElement() {
-//     let listTasksContent = document.getElementById('list-tasks-content').value;
-//     //Nếu input rỗng thì button add sẽ không hoạt động
-//     if (listTasksContent === '') {
-//         alert('Lỗi. Nhập lại');
-//         return;
-//     }
-//     // Bắt sự kiện khi nhấn Enter
-//     // input.addEventListener('keypress', function(event) {
-//     //     if (event.key === 'Enter') {
-//     //         newElement();
-//     //     }
-//     // });
-//     const newTask = {content: listTasksContent, status: false}
-//     todoList.push(newTask); 
-//     updateView(); 
-// }
+function addContentElement() {
+    let listTasksContent = document.getElementById('list-tasks-content').value;
+    //Nếu input rỗng thì button add sẽ không hoạt động
+    if (listTasksContent === '') {
+        alert('Lỗi. Nhập lại');
+        return;
+    }
+    // Bắt sự kiện khi nhấn Enter
+    // input.addEventListener('keypress', function(event) {
+    //     if (event.key === 'Enter') {
+    //         newElement();
+    //     }
+    // });
+    const newTask = {content: listTasksContent, status: false}
+    todoList.push(newTask); 
+    updateView(); 
+}
 
 // function createDeleteElement(division) {
 //     // Tạo button - nút delete
