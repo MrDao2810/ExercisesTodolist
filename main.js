@@ -1,4 +1,5 @@
 const listTasksContainerElement = document.getElementById('list-tasks-container');
+const myTasksContainer = document.getElementById('list-tasks-container');
 let todoList = [
         {content: 'dc nghi', status: false}
     ]
@@ -41,6 +42,7 @@ function addOneTaskView(task) {
     division.appendChild(textNode);
     listTasksContainerElement.appendChild(division);
     createDeleteElement(division, task); 
+    createOnTopElement(division);
 }
 
 function addContentElement() {
@@ -66,7 +68,7 @@ function addContentElement() {
 function createDeleteElement(division, task) {
     // Tạo button - nút delete
     let taskDelete = document.createElement('button');
-    // taskDelete.className = 'my-delete-element';
+    taskDelete.className = 'my-delete-element';
     // Thêm nút delete vào sau division
     division.append(taskDelete);
     taskDelete.innerHTML = '🗑️';
@@ -81,7 +83,21 @@ function createDeleteElement(division, task) {
         updateView();        
     });
 }
-
+// Tạo chức năng lên trên cùng cho một element
+function createOnTopElement(division) {
+    // Tạo button lên top
+    let taskTopElement = document.createElement('button');
+    // Tên class của button
+    taskTopElement.className = 'my-top-element';
+    taskTopElement.innerHTML = 'Top';
+    division.append(taskTopElement);
+    // Nếu click vào button thì sẽ đưa element lên trên đầu divison
+    taskTopElement.addEventListener('click', function(){
+        myTasksContainer.prepend(division);
+        // Sau khi lên đầu thì vo hiệu hoá button đó
+        taskTopElement.disabled = true;
+    });
+}
 // let totalCount = 0;
 // let doneCount = 0;
 // let unDoneCount = 0;
