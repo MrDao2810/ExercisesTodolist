@@ -41,16 +41,18 @@ function addContentElement() {
         alert('Lỗi. Nhập lại');
         return;
     }
-    // Bắt sự kiện khi nhấn Enter
-    // input.addEventListener('keypress', function(event) {
-    //     if (event.key === 'Enter') {
-    //         newElement();
-    //     }
-    // });
     const newTask = {content: listTasksContent, status: false}
     todoList.push(newTask); 
     updateView(); 
-}
+}    
+let pressEnter = document.getElementById('list-tasks-content')
+// Bắt sự kiện khi nhấn Enter
+pressEnter.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        addContentElement();
+    }
+});
+
 
 function createDeleteElement(division) {
     // Tạo button - nút delete
