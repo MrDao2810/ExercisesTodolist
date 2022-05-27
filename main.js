@@ -43,6 +43,7 @@ function addOneTaskView(task) {
     listTasksContainerElement.appendChild(division);
     createDeleteElement(division, task); 
     createOnTopElement(division);
+    createStaticCheckBox(division,checkBox);
 }
 
 function addContentElement() {
@@ -64,6 +65,20 @@ function addContentElement() {
     document.getElementById('list-tasks-content').value = '';
     updateView(); 
 }    
+
+function createStaticCheckBox(division,checkBox) {
+    // Khi checkbox được click thì gọi hàm 
+    checkBox.addEventListener('change', function(e){
+        // Target Nhận phần tử cuối cùng khi click vào checkbox
+        if (e.target.checked) {
+            myTasksContainer.append(division);
+            division.style.color = 'blue';
+        } else {
+            myTasksContainer.prepend(division);
+            division.style.color = 'black';
+        }
+    });
+}
 
 function createDeleteElement(division, task) {
     // Tạo button - nút delete
