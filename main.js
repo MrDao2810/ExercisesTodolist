@@ -32,18 +32,12 @@ function addOneTaskView(task) {
     //     return;
     // }
     let division = document.createElement('div');   // create div
-    let checkBox = document.createElement('input'); // check done/ not done
     textNode = document.createTextNode(task.content); // create text node
-    checkBox.setAttribute('type', 'checkbox');// set checkBoxElement type = checkbox
-    if (task.status) {
-        checkBox.setAttribute('checked', true);
-    }
-    division.prepend(checkBox);
     division.appendChild(textNode);
     listTasksContainerElement.appendChild(division);
     createDeleteElement(division, task); 
-    createOnTopElement(division);
-    createStaticCheckBox(division,checkBox);
+    createOnTopElement(division, task);
+    createStaticCheckBox(division, task);
 }
 
 function addContentElement() {
@@ -66,18 +60,23 @@ function addContentElement() {
     updateView(); 
 }    
 
-function createStaticCheckBox(division,checkBox) {
+function createStaticCheckBox(division, task) {
+    let checkBox = document.createElement('input'); // check done/ not done
+    checkBox.setAttribute('type', 'checkbox');// set checkBoxElement type = checkbox
+    if (task.status) {
+        checkBox.setAttribute('checked', true);
+        division.style.color = 'blue';
+    } else {
+        division.style.color = 'black';
+    }
     // Khi checkbox được click thì gọi hàm 
+
     checkBox.addEventListener('change', function(e){
         // Target Nhận phần tử cuối cùng khi click vào checkbox
-        if (e.target.checked) {
-            myTasksContainer.append(division);
-            division.style.color = 'blue';
-        } else {
-            myTasksContainer.prepend(division);
-            division.style.color = 'black';
-        }
+        task.status = e.target.checked;
+        updateView();
     });
+    division.prepend(checkBox);
 }
 
 function createDeleteElement(division, task) {
@@ -99,18 +98,25 @@ function createDeleteElement(division, task) {
     });
 }
 // Tạo chức năng lên trên cùng cho một element
-function createOnTopElement(division) {
+function createOnTopElement(division, task) {
     // Tạo button lên top
     let taskTopElement = document.createElement('button');
     // Tên class của button
     taskTopElement.className = 'my-top-element';
     taskTopElement.innerHTML = 'Top';
     division.append(taskTopElement);
+
+    if (todoList.indexOf(task) === 0) {
+        taskTopElement.disabled = true;
+    }
+
     // Nếu click vào button thì sẽ đưa element lên trên đầu divison
     taskTopElement.addEventListener('click', function(){
-        myTasksContainer.prepend(division);
-        // Sau khi lên đầu thì vo hiệu hoá button đó
-        taskTopElement.disabled = true;
+        const taskIndex = todoList.indexOf(task);
+        todoList.splice(taskIndex, 1);
+        todoList.unshift(task);
+        updateView();
+        // // Sau khi lên đầu thì vo hiệu hoá button đó
     });
 }
 // let totalCount = 0;
