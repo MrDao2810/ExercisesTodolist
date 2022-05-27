@@ -52,20 +52,20 @@ function addContentElement() {
     updateView(); 
 }
 
-// function createDeleteElement(division) {
-//     // Tạo button - nút delete
-//     let taskDelete = document.createElement('button');
-//     // taskDelete.className = 'my-delete-element';
-//     // Thêm nút delete vào sau division
-//     division.append(taskDelete);
-//     taskDelete.innerHTML = '🗑️';
-//     // Dùng addEventListener để add sự kiện cho đối tượng (Xoá division)
-//     taskDelete.addEventListener('click', function(event){
-//         const confirmation = confirm('Bạn có chắc chắn muốn xoá không');
-//         if(!confirmation) return;
-//         division.remove();
-//     });
-// }
+function createDeleteElement(division) {
+    // Tạo button - nút delete
+    let taskDelete = document.createElement('button');
+    // taskDelete.className = 'my-delete-element';
+    // Thêm nút delete vào sau division
+    division.append(taskDelete);
+    taskDelete.innerHTML = '🗑️';
+    // Dùng addEventListener để add sự kiện cho đối tượng (Xoá division)
+    taskDelete.addEventListener('click', function(event){
+        const confirmation = confirm('Bạn có chắc chắn muốn xoá không');
+        if(!confirmation) return;
+        division.remove();
+    });
+}
 
 // let totalCount = 0;
 // let doneCount = 0;
