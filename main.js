@@ -39,6 +39,7 @@ function addOneTaskView(task) {
     createOnTopElement(division, task);
     createStaticCheckBox(division, task);
     createBottomElement(division, task);
+    createUpElement(division, task);
 }
 
 function addContentElement() {
@@ -152,6 +153,29 @@ function createBottomElement(division, task) {
         todoList.splice(taskIndex, 1);
         // Đưa tas xuống cuối cùng mảng
         todoList.push(task);
+        updateView();
+    });
+}
+// Tạo chức năng tiến lên 1 bậc cho todoList
+function createUpElement(division, task) {
+    // Tạo button Up
+    let taskUpElement = document.createElement('button');
+    // Tên class của button
+    taskUpElement.className = 'my-before-element';
+    taskUpElement.innerHTML = 'Up';
+    division.prepend(taskUpElement);
+    // Vô hiệu hoá Up khi tới vị trí trên cùng
+    if (todoList.indexOf(task) === 0) {
+        taskUpElement.disabled = 'true';
+    }
+    // Bắt sự kiện button đưa element lên
+    taskUpElement.addEventListener('click', function(){
+        // Tìm vị trí của task trong todoList
+        const taskIndex = todoList.indexOf(task);
+        // Dùng Splice để xoá phần tử được xác định taskIndex trong mảng
+        let temp = todoList[taskIndex];
+        todoList[taskIndex] = todoList[taskIndex - 1];
+        todoList[taskIndex - 1] = temp;
         updateView();
     });
 }
