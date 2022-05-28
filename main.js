@@ -38,6 +38,7 @@ function addOneTaskView(task) {
     createDeleteElement(division, task); 
     createOnTopElement(division, task);
     createStaticCheckBox(division, task);
+    createBottomElement(division, task);
 }
 
 function addContentElement() {
@@ -76,8 +77,10 @@ function createStaticCheckBox(division, task) {
         const taskIndex = todoList.indexOf(task);
         todoList.splice(taskIndex, 1);
         if (task.status) {
+            // Nếu tich vào checkbox thì truyền task vào todoList tức là xuống cuối
             todoList.push(task);
         } else {
+            // Nếu không thì ngược lại đưa lại lên đầu
             todoList.unshift(task);
         }
         updateView();
@@ -94,6 +97,7 @@ function createDeleteElement(division, task) {
     taskDelete.innerHTML = '🗑️';
     // Dùng addEventListener để add sự kiện cho đối tượng (Xoá division)
     taskDelete.addEventListener('click', function(event){
+        // Nếu nhấn đồng ý (chắc chắn uốn xoá) thì sẽ chạy tiếp 
         const confirmation = confirm('Bạn có chắc chắn muốn xoá không');
         if(!confirmation) return;
         // Tìm vị trí của task trong todoList
@@ -125,7 +129,30 @@ function createOnTopElement(division, task) {
         // Đưa task lên đầu mảng todoList
         todoList.unshift(task);
         updateView();
-        // // Sau khi lên đầu thì vo hiệu hoá button đó
+        // Sau khi lên đầu thì vo hiệu hoá button đó
+    });
+}
+// Tạo chức năng xuống cuối cùng cho một Element
+function createBottomElement(division, task) {
+    // Tạo button bottom
+    let taskBotElement = document.createElement('button');
+    // Tên class của button
+    taskBotElement.className = 'my-bot-element';
+    taskBotElement.innerHTML = 'Bot';
+    division.prepend(taskBotElement);
+    // Vô hiệu hoá bottpom khi ở vị trí dưới cùng của todoList
+    if (todoList.indexOf(task) === todoList.length - 1) {    
+        taskBotElement.disabled = true;
+    }
+    // Bắt sự kiện button đưa element xuống cuối cùng
+    taskBotElement.addEventListener('click', function(){
+        // tìm vị trí của task trong todoList
+        const taskIndex = todoList.indexOf(task);
+        // Dùng Splice để xoá phần tử được xác định taskIndex trong mảng
+        todoList.splice(taskIndex, 1);
+        // Đưa tas xuống cuối cùng mảng
+        todoList.push(task);
+        updateView();
     });
 }
 // let totalCount = 0;
