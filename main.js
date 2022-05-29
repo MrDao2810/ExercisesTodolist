@@ -41,6 +41,7 @@ function addOneTaskView(task) {
     createBottomElement(division, task);
     createUpElement(division, task);
     createDownElement(division, task);
+    updateDoneView();
 }
 
 function addContentElement() {
@@ -53,6 +54,8 @@ function addContentElement() {
     for (let i = 0; i < todoList.length; i++) {
         if (listTasksContent === todoList[i].content) {
             alert('Nhập lại');
+            // delete giá trị thẻ input sau khi nhập
+            document.getElementById('list-tasks-content').value = '';
             return;
         }
     }
@@ -62,13 +65,14 @@ function addContentElement() {
     document.getElementById('list-tasks-content').value = '';
     updateView(); 
 }    
-
+// Tạo checkbox
 function createStaticCheckBox(division, task) {
     let checkBox = document.createElement('input'); // check done/ not done
     checkBox.setAttribute('type', 'checkbox');// set checkBoxElement type = checkbox
     if (task.status) {
         checkBox.setAttribute('checked', true);
         division.style.color = 'blue';
+        division.style.textDecoration = 'line-through';
     } else {
         division.style.color = 'black';
     }
@@ -89,7 +93,7 @@ function createStaticCheckBox(division, task) {
     });
     division.prepend(checkBox);
 }
-
+// Tạo button delete
 function createDeleteElement(division, task) {
     // Tạo button - nút delete
     let taskDelete = document.createElement('button');
@@ -203,6 +207,11 @@ function createDownElement(division, task) {
         updateView();
     });
 }
+// Hiện tất cả các công việc đã thêm trong todolist
+function updateDoneView() {
+    document.getElementById('total').innerHTML = 'Tất cả :' + todoList.length;
+}
+
 // let totalCount = 0;
 // let doneCount = 0;
 // let unDoneCount = 0;
