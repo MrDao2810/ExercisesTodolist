@@ -228,6 +228,15 @@ function updateDoneView() {
 // function doneTaskElement() {
 
 // }
+// Share công việc 
+function searchTask(textNode) {
+
+    let shareTaskContent = document.getElementById('mySearch').value;
+    for (let i = 0; i < todoList.length; i++) {
+        
+    }
+    updateView();
+}
 // let totalCount = 0;
 // let doneCount = 0;
 // let unDoneCount = 0;
