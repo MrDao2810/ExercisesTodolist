@@ -12,7 +12,7 @@ function updateView() {
     updateTodoListView();
 }
 
-let pressEnter = document.getElementById('list-tasks-content')
+let pressEnter = document.getElementById('myListContent');
 // Bắt sự kiện khi nhấn Enter
 pressEnter.addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
@@ -43,36 +43,46 @@ function addOneTaskView(task) {
     createDownElement(division, task);
     updateDoneView();
 }
-
+// Vô hiệu hóa button add nếu để trống.
+myDiv.addEventListener('input', () => {
+    if (myListContent.value.length > 2) {
+        myBtn.removeAttribute('disabled');
+    } else {
+        myBtn.setAttribute('disabled', 'disabled');
+    }
+});
 function addContentElement() {
-    let listTasksContent = document.getElementById('list-tasks-content').value;
+    let listTasksContent = document.getElementById('myListContent').value;
     //Nếu input rỗng thì button add sẽ không hoạt động
     if (listTasksContent === '') {
         alert('Lỗi. Nhập lại');
         return;
     }
+
     for (let i = 0; i < todoList.length; i++) {
         if (listTasksContent === todoList[i].content) {
             alert('Nhập lại');
             // delete giá trị thẻ input sau khi nhập
-            document.getElementById('list-tasks-content').value = '';
+            document.getElementById('myListContent').value = '';
             return;
         }
     }
     const newTask = {content: listTasksContent, status: false}
     todoList.push(newTask); 
     // delete giá trị thẻ input sau khi nhập
-    document.getElementById('list-tasks-content').value = '';
+    document.getElementById('myListContent').value = '';
     updateView(); 
 }    
 // Tạo checkbox
 function createStaticCheckBox(division, task) {
+    let done = [];
     let checkBox = document.createElement('input'); // check done/ not done
     checkBox.setAttribute('type', 'checkbox');// set checkBoxElement type = checkbox
     if (task.status) {
         checkBox.setAttribute('checked', true);
         division.style.color = 'blue';
         division.style.textDecoration = 'line-through';
+        done = todoList.length - 1;
     } else {
         division.style.color = 'black';
     }
@@ -209,9 +219,15 @@ function createDownElement(division, task) {
 }
 // Hiện tất cả các công việc đã thêm trong todolist
 function updateDoneView() {
-    document.getElementById('total').innerHTML = 'Tất cả :' + todoList.length;
+    document.getElementById('total').innerHTML = 'Tất cả ' + todoList.length;
+    document.getElementById('done').innerHTML = 'Đã hoàn thành ';
+    document.getElementById('undone').innerHTML = 'Chưa hoàn thành ';
 }
 
+// Hiện trạng thái công việc theo task 
+// function doneTaskElement() {
+
+// }
 // let totalCount = 0;
 // let doneCount = 0;
 // let unDoneCount = 0;

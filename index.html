@@ -11,11 +11,11 @@
     <input type="search" id="mySearch" name="q">
     <button onclick="searchTask()">Search</button>
     <div id="myDiv" class="header">
-        <button id="total" onclick="totalElement()">Tất Cả : 0</button>
-        <button id="done" onclick="doneElement()">Đã hoàn thành : 0</button>
-        <button id="undone" onclick="unDoneElement()">Chưa hoàn thành : 0</button> </br>
-        <input type="text" class="mytext" id="list-tasks-content">
-        <button onclick="addContentElement()" class="addBtn" id="myBtn">Add</button>
+        <button id="total" onclick="totalTaskElement()"></button>
+        <button id="done" onclick="doneTaskElement()"></button>
+        <button id="undone" onclick="unDoneTaskElement()"></button> </br>
+        <input type="text" class="mytext" id="myListContent">
+        <button onclick="addContentElement()" disabled="disabled" class="addBtn" id="myBtn">Add</button>
         <div class="header-content" id="list-tasks-container"></div>
         <div id="my-date"></div>
         <button onclick="checkAllElements()" name="check" id="btn-check-all" class="allBtn">Chọn tất cả</button>
