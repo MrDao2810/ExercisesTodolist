@@ -45,7 +45,7 @@ function addOneTaskView(task) {
 }
 // Vô hiệu hóa button add nếu để trống.
 myDiv.addEventListener('input', () => {
-    if (myListContent.value.length > 2) {
+    if (myListContent.value.length >= 1) {
         myBtn.removeAttribute('disabled');
     } else {
         myBtn.setAttribute('disabled', 'disabled');
@@ -58,7 +58,7 @@ function addContentElement() {
         alert('Lỗi. Nhập lại');
         return;
     }
-
+    // Nếu trùng công iệc thì nhập lại
     for (let i = 0; i < todoList.length; i++) {
         if (listTasksContent === todoList[i].content) {
             alert('Nhập lại');
@@ -75,14 +75,12 @@ function addContentElement() {
 }    
 // Tạo checkbox
 function createStaticCheckBox(division, task) {
-    let done = [];
     let checkBox = document.createElement('input'); // check done/ not done
     checkBox.setAttribute('type', 'checkbox');// set checkBoxElement type = checkbox
     if (task.status) {
         checkBox.setAttribute('checked', true);
         division.style.color = 'blue';
         division.style.textDecoration = 'line-through';
-        done = todoList.length - 1;
     } else {
         division.style.color = 'black';
     }
@@ -228,15 +226,30 @@ function updateDoneView() {
 // function doneTaskElement() {
 
 // }
-// Share công việc 
-function searchTask(textNode) {
 
-    let shareTaskContent = document.getElementById('mySearch').value;
-    for (let i = 0; i < todoList.length; i++) {
-        
-    }
-    updateView();
-}
+// Search công việc 
+// function searchTask(division, task) {
+//     // Lấy nội dung cần tìm trong input search
+//     let searchTasksContent = document.getElementById('mySearch').value;
+//     const contentSearch = document.getElementById('myContent');
+//     for (let i = 0; i < todoList.length; i++) {
+//         // Dùng includes để check chỉ cần có 1 chứ hoặc số giống là sẽ đưa ra
+//         if (todoList[i].content.includes(searchTasksContent)) {
+//             division = document.createElement('div');
+//             searchContent = document.createTextNode(todoList[i].content);
+//             division.appendChild(searchContent);
+//             contentSearch.appendChild(division);
+//             //console.log(todoList[i].content);
+//             return;
+//         } else {
+//             alert('Khong co cong viec');
+//         }
+//     }
+//     updateView();
+// }
+
+
+
 // let totalCount = 0;
 // let doneCount = 0;
 // let unDoneCount = 0;
