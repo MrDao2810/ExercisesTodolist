@@ -13,14 +13,15 @@
         <input type="search" id="mySearch">
         <button onclick="searchTask()">Search</button>
         <div class="content-search" id="myContent"></div> </br>
-        <button id="total" onclick="totalTaskElement()"></button>
-        <button id="done" onclick="doneTaskElement()"></button>
-        <button id="undone" onclick="unDoneTaskElement()"></button> </br>
+        <button id="total" onclick="totalTaskElement()">Tất cả</button>
+        <button id="done" onclick="doneTaskElement()">Đã hoàn thành 0</button>
+        <button id="notDone" onclick="notDoneTaskElement()">Chưa hoàn thành 0</button> </br>
         <input type="text" class="mytext" id="myListContent">
         <button onclick="addContentElement()" disabled="disabled" class="addBtn" id="myBtn">Add</button>
         <div class="header-content" id="list-tasks-container"></div>
         <div id="my-date"></div>
-        <input type="checkbox">
+        <button type="button" name="check" id="btn-check-all" class="allBtn" onclick="createAllCheckBox()">Chọn tất cả</button>
+        <button type="button" id="btn-remove-task" class="removeAllBtn" onclick="createRemoveAllTask()">Xoá tất cả</button>   
     </div>
     <script src="./main.js"></script>    
 </body>
