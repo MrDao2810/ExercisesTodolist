@@ -1,6 +1,5 @@
 const listTasksContainerElement = document.getElementById('list-tasks-container');
 const myTasksContainer = document.getElementById('list-tasks-container');
-let node_list = document.getElementsByTagName('input');
 let currentTab = 'all'; // done | undone
 let isCheckAll = true;
 let todoList = [
@@ -262,16 +261,24 @@ function createAllCheckBox() {
     const buttonCheckAll = document.getElementById('btn-check-all');
     for (let i = 0; i < todoList.length; i++) 
     {
-        if (isCheckAll) 
+        if (isCheckAll)  // Nếu là isCheckAll (Tức true) thì todoList[i].status = true;
         {
             todoList[i].status = true;
         } else {
             todoList[i].status = false;
         }
     }
-    isCheckAll = !isCheckAll;
+    isCheckAll = !isCheckAll; // Nếu !isCheckAll (Tức false) thì todoList[i].status = false;
     buttonCheckAll.innerHTML = isCheckAll ? 'Chọn tất cả' : 'Bỏ chọn tất cả';
     updateView();  
+}
+// Button xoá tất cả các task
+function createRemoveAllTask() {
+    const confirmation = confirm('Bạn có muốn xoá hết');
+    if(!confirmation) return;
+    // Xoá từ vị trí 0 đến vị trí cuối cùng (là độ dài mảng todoList.length) 
+    todoList.splice(0, todoList.length);
+    updateView();
 }
 // Search công việc 
 // function searchTask(division, task) {
