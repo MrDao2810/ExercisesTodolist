@@ -1,6 +1,8 @@
 const listTasksContainerElement = document.getElementById('list-tasks-container');
 const myTasksContainer = document.getElementById('list-tasks-container');
+let node_list = document.getElementsByTagName('input');
 let currentTab = 'all'; // done | undone
+let isCheckAll = true;
 let todoList = [
         {content: 'dc nghi', status: false}
     ]
@@ -31,7 +33,6 @@ function updateTodoListView() {
         } else if (currentTab === 'all') {
             addOneTaskView(todoList[i]);
         }
-
     }
 }
 // Thêm một TaskView vào todoList
@@ -44,9 +45,9 @@ function addOneTaskView(task) {
     textNode = document.createTextNode(task.content); // create text node
     division.appendChild(textNode);
     listTasksContainerElement.appendChild(division);
+    createStaticCheckBox(division, task);
     createDeleteElement(division, task); 
     createOnTopElement(division, task);
-    createStaticCheckBox(division, task);
     createBottomElement(division, task);
     createUpElement(division, task);
     createDownElement(division, task);
@@ -226,15 +227,18 @@ function createDownElement(division, task) {
 }
 // Hiện tất cả các công việc đã thêm trong todolist
 // function updateDoneView() {
-//      document.getElementById('done').innerHTML = 'Đã hoàn thành';
+//      
 //      document.getElementById('undone').innerHTML = 'Chưa hoàn thành ';
 // }
 // Đếm tổng số công việc | đã làm | chưa làm
 function updateCountTaskView() {
-    document.getElementById('total').innerHTML = 'Tất cả ' + todoList.length;
-    // for (let i = 0; i < todoList.length; i++) {
-        
-    // }
+    for (let i = 0; i <= todoList.length; i++) {
+        if (i === todoList.length) {
+            document.getElementById('total').innerHTML = 'Tất cả ' + i;
+        } else if (i < todoList.length && todoList[i].status) {
+            
+        }
+    }
 }
 
 // Hiện trạng thái công việc theo task 
@@ -249,11 +253,26 @@ function doneTaskElement() {
     updateView();
 }
 // Hiện tất cả công việc chưa hoàn thành
-function unDoneTaskElement() {
+function notDoneTaskElement() {
     currentTab = 'undone';
     updateView();
 }
-
+// Chọn tất cả các task và huỷ chọn
+function createAllCheckBox() {
+    const buttonCheckAll = document.getElementById('btn-check-all');
+    for (let i = 0; i < todoList.length; i++) 
+    {
+        if (isCheckAll) 
+        {
+            todoList[i].status = true;
+        } else {
+            todoList[i].status = false;
+        }
+    }
+    isCheckAll = !isCheckAll;
+    buttonCheckAll.innerHTML = isCheckAll ? 'Chọn tất cả' : 'Bỏ chọn tất cả';
+    updateView();  
+}
 // Search công việc 
 // function searchTask(division, task) {
 //     // Lấy nội dung cần tìm trong input search
