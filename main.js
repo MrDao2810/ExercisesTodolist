@@ -1,5 +1,6 @@
 const listTasksContainerElement = document.getElementById('list-tasks-container');
 const myTasksContainer = document.getElementById('list-tasks-container');
+let currentTab = 'all'; // done | undone
 let todoList = [
         {content: 'dc nghi', status: false}
     ]
@@ -21,8 +22,16 @@ pressEnter.addEventListener('keypress', function(event) {
 });
 
 function updateTodoListView() {
+    // Đếm độ dài của mảng todoList rồi check nếu check sang all sẽ hiện tất cả, done sẽ hiện đã làm, không thì ngược lại
     for (let i = 0; i < todoList.length; i++) {
-        addOneTaskView(todoList[i]);
+        if (currentTab === 'done' && todoList[i].status) {
+            addOneTaskView(todoList[i]);
+        } else if (currentTab === 'undone' && !todoList[i].status) {
+            addOneTaskView(todoList[i]);
+        } else if (currentTab === 'all') {
+            addOneTaskView(todoList[i]);
+        }
+
     }
 }
 // Thêm một TaskView vào todoList
@@ -41,7 +50,7 @@ function addOneTaskView(task) {
     createBottomElement(division, task);
     createUpElement(division, task);
     createDownElement(division, task);
-    updateDoneView();
+    updateCountTaskView();
 }
 // Vô hiệu hóa button add nếu để trống.
 myDiv.addEventListener('input', () => {
@@ -216,16 +225,34 @@ function createDownElement(division, task) {
     });
 }
 // Hiện tất cả các công việc đã thêm trong todolist
-function updateDoneView() {
+// function updateDoneView() {
+//      document.getElementById('done').innerHTML = 'Đã hoàn thành';
+//      document.getElementById('undone').innerHTML = 'Chưa hoàn thành ';
+// }
+// Đếm tổng số công việc | đã làm | chưa làm
+function updateCountTaskView() {
     document.getElementById('total').innerHTML = 'Tất cả ' + todoList.length;
-    document.getElementById('done').innerHTML = 'Đã hoàn thành ';
-    document.getElementById('undone').innerHTML = 'Chưa hoàn thành ';
+    // for (let i = 0; i < todoList.length; i++) {
+        
+    // }
 }
 
 // Hiện trạng thái công việc theo task 
-// function doneTaskElement() {
-
-// }
+// Hiện tất cả công việc 
+function totalTaskElement() {
+    currentTab = 'all';
+    updateView();
+}
+// Hiện tất cả công việc đã hoàn thành
+function doneTaskElement() {
+    currentTab = 'done';
+    updateView();
+}
+// Hiện tất cả công việc chưa hoàn thành
+function unDoneTaskElement() {
+    currentTab = 'undone';
+    updateView();
+}
 
 // Search công việc 
 // function searchTask(division, task) {
