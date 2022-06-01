@@ -2,9 +2,9 @@ const listTasksContainerElement = document.getElementById('list-tasks-container'
 const myTasksContainer = document.getElementById('list-tasks-container');
 let currentTab = 'all'; // done | undone
 let isCheckAll = true;
-let todoList = [
-        {content: 'dc nghi', status: false}
-    ]
+let storageKey = 'todoList';
+// Check xem nếu trong trường hợp không có gì : null thì phải trở về string [] . vì nếu localStorage chỉ nhận string
+let todoList = JSON.parse(localStorage.getItem(storageKey)) ? JSON.parse(localStorage.getItem(storageKey)) : [];
 
 updateView();
 
@@ -33,6 +33,7 @@ function updateTodoListView() {
             addOneTaskView(todoList[i]);
         }
     }
+    
 }
 // Thêm một TaskView vào todoList
 function addOneTaskView(task) {
@@ -44,6 +45,8 @@ function addOneTaskView(task) {
     textNode = document.createTextNode(task.content); // create text node
     division.appendChild(textNode);
     listTasksContainerElement.appendChild(division);
+    // Dùng localStorage để lưu data. setItem là 1 phương thức và là 1 function nên phải truyền vào 2 tham số
+    localStorage.setItem(storageKey, JSON.stringify(todoList)); // 2 tham số truyền vào là: 1 Key (key muốn lưu) | 2: là giá trị  
     createStaticCheckBox(division, task);
     createDeleteElement(division, task); 
     createOnTopElement(division, task);
@@ -51,6 +54,7 @@ function addOneTaskView(task) {
     createUpElement(division, task);
     createDownElement(division, task);
     updateCountTaskView();
+    
 }
 // Vô hiệu hóa button add nếu để trống.
 myDiv.addEventListener('input', () => {
