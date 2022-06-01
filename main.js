@@ -3,9 +3,11 @@ const myTasksContainer = document.getElementById('list-tasks-container');
 let currentTab = 'all'; // done | undone
 let isCheckAll = true;
 let storageKey = 'todoList';
+
 // Check xem nếu trong trường hợp không có gì : null thì phải trở về string [] . vì nếu localStorage chỉ nhận string
 let todoList = JSON.parse(localStorage.getItem(storageKey)) ? JSON.parse(localStorage.getItem(storageKey)) : [];
-
+// Tạo 1 mảng để lưu những content !== với searchTasksContent
+let hiddenItemIndexes = [];
 updateView();
 
 function updateView() {
@@ -25,6 +27,10 @@ pressEnter.addEventListener('keypress', function(event) {
 function updateTodoListView() {
     // Đếm độ dài của mảng todoList rồi check nếu check sang all sẽ hiện tất cả, done sẽ hiện đã làm, không thì ngược lại
     for (let i = 0; i < todoList.length; i++) {
+        // Tìm vị trí của i trong hiddenItemIndexes nếu !== -1 thì tiếp tục vòng lặp
+        if (hiddenItemIndexes.indexOf(i) !== -1) {
+            continue;
+        }
         if (currentTab === 'done' && todoList[i].status) {
             addOneTaskView(todoList[i]);
         } else if (currentTab === 'undone' && !todoList[i].status) {
@@ -285,25 +291,23 @@ function createRemoveAllTask() {
     updateView();
 }
 // Search công việc 
-// function searchTask(division, task) {
-//     // Lấy nội dung cần tìm trong input search
-//     let searchTasksContent = document.getElementById('mySearch').value;
-//     const contentSearch = document.getElementById('myContent');
-//     for (let i = 0; i < todoList.length; i++) {
-//         // Dùng includes để check chỉ cần có 1 chứ hoặc số giống là sẽ đưa ra
-//         if (todoList[i].content.includes(searchTasksContent)) {
-//             division = document.createElement('div');
-//             searchContent = document.createTextNode(todoList[i].content);
-//             division.appendChild(searchContent);
-//             contentSearch.appendChild(division);
-//             //console.log(todoList[i].content);
-//             return;
-//         } else {
-//             alert('Khong co cong viec');
-//         }
-//     }
-//     updateView();
-// }
+function searchTask(division, task) {
+    searchedItemIndexes = [];
+    // Lấy nội dung cần tìm trong input search
+    let searchTasksContent = document.getElementById('mySearch').value;
+    if (searchTasksContent === '') {
+        hiddenItemIndexes = [];
+        updateView();
+        return;
+    }
+    for (let i = 0; i < todoList.length; i++) {
+        // ! Nếu trong todoList chứa(includes) searchTasksContent thì đưa thằng nội dung đấy vào mảng hiddenItemIndexes 
+        if (!todoList[i].content.toUpperCase().includes(searchTasksContent.toUpperCase())) {
+            hiddenItemIndexes.push(i);
+        }
+    }
+    updateView();
+}
 
 
 

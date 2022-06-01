@@ -20,11 +20,11 @@ body {
     position: absolute;
 }
 .header-content .my-before-element{
-    left: 450px;
+    left: 430px;
     position: absolute;
 }
 .header-content .my-down-element{
-    left: 490px;
+    left: 470px;
     position: absolute;
 }
 .listText {
