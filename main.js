@@ -3,7 +3,6 @@ const myTasksContainer = document.getElementById('list-tasks-container');
 let currentTab = 'all'; // done | undone
 let isCheckAll = true;
 let storageKey = 'todoList';
-
 // Check xem nếu trong trường hợp không có gì : null thì phải trở về string [] . vì nếu localStorage chỉ nhận string
 let todoList = JSON.parse(localStorage.getItem(storageKey)) ? JSON.parse(localStorage.getItem(storageKey)) : [];
 // Tạo 1 mảng để lưu những content !== với searchTasksContent
@@ -16,9 +15,9 @@ function updateView() {
     updateTodoListView();
 }
 
-let pressEnter = document.getElementById('myListContent');
+let pressEnterAdd = document.getElementById('myListContent');
 // Bắt sự kiện khi nhấn Enter
-pressEnter.addEventListener('keypress', function(event) {
+pressEnterAdd.addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         addContentElement();
     }
@@ -266,7 +265,7 @@ function notDoneTaskElement() {
     currentTab = 'undone';
     updateView();
 }
-// Chọn tất cả các task và huỷ chọn
+// Chọn tất cả các task và hgit uỷ chọn
 function createAllCheckBox() {
     const buttonCheckAll = document.getElementById('btn-check-all');
     for (let i = 0; i < todoList.length; i++) 
@@ -290,8 +289,15 @@ function createRemoveAllTask() {
     todoList.splice(0, todoList.length);
     updateView();
 }
+let pressEnterSearch = document.getElementById('mySearch');
+// Bắt sự kiện khi nhấn Enter
+pressEnterSearch.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        searchTask();
+    }
+});
 // Search công việc 
-function searchTask(division, task) {
+function searchTask() {
     searchedItemIndexes = [];
     // Lấy nội dung cần tìm trong input search
     let searchTasksContent = document.getElementById('mySearch').value;
