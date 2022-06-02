@@ -8,14 +8,13 @@
     <title>Todo List</title>
 </head>
 <body>
-    
+    <button onclick="logout()">Đăng xuất</button>
     <div id="myDiv" class="header">
-        <input type="search" id="mySearch">
-        <button onclick="searchTask()">Search</button>
+        <input type="search" id="mySearch" onkeyup="searchTask()" placeholder="Search task..">
         <div class="content-search" id="myContent"></div> </br>
-        <button id="total" onclick="totalTaskElement()">Tất cả</button>
-        <button id="done" onclick="doneTaskElement()">Đã hoàn thành 0</button>
-        <button id="notDone" onclick="notDoneTaskElement()">Chưa hoàn thành 0</button> </br>
+        <button id="total" onclick="totalTaskElement()"></button>
+        <button id="done" onclick="doneTaskElement()"></button>
+        <button id="notDone" onclick="notDoneTaskElement()"></button> </br>
         <input type="text" class="mytext" id="myListContent">
         <button onclick="addContentElement()" disabled="disabled" class="addBtn" id="myBtn">Add</button>
         <div class="header-content" id="list-tasks-container"></div>

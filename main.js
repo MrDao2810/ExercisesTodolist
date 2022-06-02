@@ -3,11 +3,21 @@ const myTasksContainer = document.getElementById('list-tasks-container');
 let currentTab = 'all'; // done | undone
 let isCheckAll = true;
 let storageKey = 'todoList';
+let owner;
+logout();
+
 // Check xem nếu trong trường hợp không có gì : null thì phải trở về string [] . vì nếu localStorage chỉ nhận string
 let todoList = JSON.parse(localStorage.getItem(storageKey)) ? JSON.parse(localStorage.getItem(storageKey)) : [];
 // Tạo 1 mảng để lưu những content !== với searchTasksContent
 let hiddenItemIndexes = [];
 updateView();
+
+function logout() {
+    owner = prompt('Nhập tên người dùng: ');
+    if (!owner) {
+        logout();
+    }
+}
 
 function updateView() {
     // Xoá dữ liệu cũ và update lại data từ updateTodoListView()
@@ -18,15 +28,28 @@ function updateView() {
 let pressEnterAdd = document.getElementById('myListContent');
 // Bắt sự kiện khi nhấn Enter
 pressEnterAdd.addEventListener('keypress', function(event) {
+    console.log('owner: ' + owner);
     if (event.key === 'Enter') {
         addContentElement();
     }
 });
 
-function updateTodoListView() {
+function updateTodoListView(task) {
+    let count = 0;
+    const taskCount = document.getElementById('total');
+    const taskDone = document.getElementById('done');
+    const taskNotDone = document.getElementById('notDone');
+    for (task of todoList) {
+        if(task.status) {
+            ++count;
+        }
+    }
+    taskCount.innerHTML ='Tất cả: ' + todoList.length;
+    taskDone.innerHTML = 'Đã hoàn thành: ' + count;
+    taskNotDone.innerHTML ='Chưa hoàn thành: ' + (todoList.length - count);
     // Đếm độ dài của mảng todoList rồi check nếu check sang all sẽ hiện tất cả, done sẽ hiện đã làm, không thì ngược lại
     for (let i = 0; i < todoList.length; i++) {
-        // Tìm vị trí của i trong hiddenItemIndexes nếu !== -1 thì tiếp tục vòng lặp
+        // Tìm vị trí của i trong hiddenItemIndexes nếu !== -1 thì tiếp tục vòng lặp , có thì hiển thị nếu ko có thì ẩn đi
         if (hiddenItemIndexes.indexOf(i) !== -1) {
             continue;
         }
@@ -58,7 +81,7 @@ function addOneTaskView(task) {
     createBottomElement(division, task);
     createUpElement(division, task);
     createDownElement(division, task);
-    updateCountTaskView();
+    // updateCountTaskView();
     
 }
 // Vô hiệu hóa button add nếu để trống.
@@ -95,6 +118,7 @@ function addContentElement() {
 function createStaticCheckBox(division, task) {
     let checkBox = document.createElement('input'); // check done/ not done
     checkBox.setAttribute('type', 'checkbox');// set checkBoxElement type = checkbox
+    division.prepend(checkBox);
     if (task.status) {
         checkBox.setAttribute('checked', true);
         division.style.color = 'blue';
@@ -117,7 +141,6 @@ function createStaticCheckBox(division, task) {
         }
         updateView();
     });
-    division.prepend(checkBox);
 }
 // Tạo button delete
 function createDeleteElement(division, task) {
@@ -216,7 +239,7 @@ function createDownElement(division, task) {
     let taskDownElement = document.createElement('button');
     // Teen class cuar button
     taskDownElement.className = 'my-down-element';
-    taskDownElement.innerText = 'Down';
+    taskDownElement.innerHTML = 'Down';
     division.prepend(taskDownElement);
     // Vô hiệu hoá Down khi đi tới vị trí cuối cùng
     if (todoList.indexOf(task) === todoList.length - 1) {    
@@ -239,15 +262,15 @@ function createDownElement(division, task) {
 //      document.getElementById('undone').innerHTML = 'Chưa hoàn thành ';
 // }
 // Đếm tổng số công việc | đã làm | chưa làm
-function updateCountTaskView() {
-    for (let i = 0; i <= todoList.length; i++) {
-        if (i === todoList.length) {
-            document.getElementById('total').innerHTML = 'Tất cả ' + i;
-        } else if (i < todoList.length && todoList[i].status) {
+// function updateCountTaskView() {
+//     for (let i = 0; i <= todoList.length; i++) {
+//         if (i === todoList.length) {
+//             document.getElementById('total').innerHTML = 'Tất cả ' + i;
+//         } else {
             
-        }
-    }
-}
+//         }
+//     }
+// }
 
 // Hiện trạng thái công việc theo task 
 // Hiện tất cả công việc 
@@ -265,7 +288,7 @@ function notDoneTaskElement() {
     currentTab = 'undone';
     updateView();
 }
-// Chọn tất cả các task và hgit uỷ chọn
+// Chọn tất cả các task và huỷ chọn
 function createAllCheckBox() {
     const buttonCheckAll = document.getElementById('btn-check-all');
     for (let i = 0; i < todoList.length; i++) 
@@ -289,6 +312,7 @@ function createRemoveAllTask() {
     todoList.splice(0, todoList.length);
     updateView();
 }
+
 let pressEnterSearch = document.getElementById('mySearch');
 // Bắt sự kiện khi nhấn Enter
 pressEnterSearch.addEventListener('keypress', function(event) {
@@ -298,7 +322,7 @@ pressEnterSearch.addEventListener('keypress', function(event) {
 });
 // Search công việc 
 function searchTask() {
-    searchedItemIndexes = [];
+    hiddenItemIndexes = [];
     // Lấy nội dung cần tìm trong input search
     let searchTasksContent = document.getElementById('mySearch').value;
     if (searchTasksContent === '') {
@@ -307,186 +331,10 @@ function searchTask() {
         return;
     }
     for (let i = 0; i < todoList.length; i++) {
-        // ! Nếu trong todoList chứa(includes) searchTasksContent thì đưa thằng nội dung đấy vào mảng hiddenItemIndexes 
+        // Nếu trong todoList nội dung nào không giống với searchTasksContent thì đưa vào hiddenItemIndexes
         if (!todoList[i].content.toUpperCase().includes(searchTasksContent.toUpperCase())) {
             hiddenItemIndexes.push(i);
         }
     }
     updateView();
 }
-
-
-
-// let totalCount = 0;
-// let doneCount = 0;
-// let unDoneCount = 0;
-// let today = new Date();
-// let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
-// let time = today.getHours() + ":" + today.getMinutes();
-// let dateTime = date + ' ' + time;
-// const myUL = document.getElementById('myUl');
-// const inputElement = document.getElementById('myBtn');
-// const input = document.getElementById('myInput');
-// let node_list = document.getElementsByTagName('input');
-// let content = [];
-
-// function newElement() {            
-//      Tạo node div
-//      let taskDiv = document.createElement('div');
-//      // Lấy giá trị người dùng nhập
-//      let listTaskString = document.getElementById('myInput').value;   
-//      // Nếu input rỗng thì button add sẽ không hoạt động
-//      if (listTaskString === '') {
-//     alert('Lỗi. Nhập lại');
-//     return;
-// }
-//     // Tạo dối tượng text node 
-//     let text = document.createTextNode(listTaskString);
-//     // delete giá trị thẻ input sau khi nhập
-//     document.getElementById('myInput').value = '';
-//     // Gán text node cho div vừa tạo
-//     taskDiv.appendChild(text);
-//     myUL.appendChild(taskDiv);
-//     // Tạo Button - button lên top
-//     let topElement = document.createElement('button');
-//     topElement.className = 'my-top-element'
-//     topElement.innerHTML = 'Top';
-//     taskDiv.append(topElement);
-//     topElement.addEventListener('click', function() {
-//         myUL.prepend(taskDiv);
-//     });
-
-//     // Tạo Button - button xuống dưới cùng
-//     let bottomElement = document.createElement('button');
-//     bottomElement.className = 'my-bot-element';
-//     bottomElement.innerHTML = 'Bottom';
-//     taskDiv.append(bottomElement);
-//     bottomElement.addEventListener('click', function() {
-//         myUL.append(taskDiv);
-//     });
-
-//     // Tạo button - button đổi chỗ element lên trên
-//     // Dùng childNodes để lấy tất cả các nút con của listTaskString
-//     const children = myUL.childNodes; 
-//     let beforeElement = document.createElement('button');
-//     beforeElement.className = 'my-before-element';
-//     beforeElement.innerHTML = 'Up';
-//     taskDiv.append(beforeElement);
-//     beforeElement.addEventListener('click', function() {
-//         const i = Array.from(children).indexOf(taskDiv);
-//         if (i === 0) {
-//             return;
-//         } else {
-//             children[i].parentNode.insertBefore(children[i], children[i - 1]);
-//         }
-//     });
-
-//     // Tạo button - button đổi chỗ element xuống dưới
-//     let downElement = document.createElement('button');
-//     downElement.className = 'my-down-element';
-//     downElement.innerHTML = 'Down';
-//     taskDiv.append(downElement);
-//     downElement.addEventListener('click', function() {
-//         const i = Array.from(children).indexOf(taskDiv);
-//         if (i === 0) {
-//             return;
-//         } else {
-//             children[i].parentNode.insertBefore(children[i + 1], children[i]);
-//         }
-//     });
-//     // let dateElement = document.createElement('div');
-//     // document.getElementById('my-date').innerHTML = dateTime;
-//     createCheckBox(taskDiv);
-// }
-
-// // Bắt sự kiện khi nhấn Enter
-// input.addEventListener('keypress', function(event) {
-//     if (event.key === 'Enter') {
-//         newElement();
-//     }
-// });
-
-// // Tạo checkbox và thêm tính năng cho chúng
-// function createCheckBox(taskDiv) {
-//     // Tạo input - checkbox
-//     let checkBoxElement = document.createElement('input');
-//     // Cho input type = checkbox
-//     checkBoxElement.setAttribute('type', 'checkbox');
-//     // Add vào đầu của taskDiv
-//     taskDiv.prepend(checkBoxElement);
-//     // Tạo button - nút Delete
-//     let tasksDelete = document.createElement('button');
-//     tasksDelete.className = 'my-delete-element';
-//     // Add vào sau taskDiv
-//     taskDiv.append(tasksDelete);
-//     tasksDelete.innerHTML = '🗑️'; // <button onclick="process">Hello</button>
-//     // Dùng addEventListener add sự kiện cho đối tượng 
-//     tasksDelete.addEventListener('click', function(event) {
-//         const confirmation = confirm('Bạn có chắc chắn muốn xoá');
-//         if (!confirmation) return;
-//         const isDone = checkBoxElement.checked;
-//         isDone ? --doneCount : --unDoneCount;
-//         taskDiv.remove();
-//         --totalCount;
-//         updateDoneView();
-//     });
-//     // khi checkBoxElement (checkbox) được click thì sẽ gọi hàm 
-//     checkBoxElement.addEventListener('change', function(e) {
-//         // Target là thằng cuối cùng mà mình click vào
-//         if (e.target.checked) {
-//             ++doneCount;
-//             unDoneCount = totalCount - doneCount;
-//             taskDiv.style.color = 'blue';
-//         } else {
-//             --doneCount;
-//             unDoneCount = totalCount - doneCount;
-//             taskDiv.style.color = 'black';
-//         }
-//         updateDoneView();
-//     });
-//     // In ra số lượng công việc đã add
-//     ++unDoneCount;
-//     ++totalCount;
-//     updateDoneView();
-// }
-// // Chọn tất cả checkbox và bỏ chọn tất cả checkbox
-// function checkAllElements(taskDiv) {
-//     const buttonCheckAll = document.getElementById('btn-check-all');
-//     const isCheck = buttonCheckAll.getAttribute('name');
-//     for (let i = 0; i < node_list.length; i++) 
-//     {
-//         let node = node_list[i];
-//         if (node.getAttribute('type') == 'checkbox') 
-//         {
-//             if (isCheck === 'check') {
-//                 node.setAttribute('checked', true);
-//                 buttonCheckAll.setAttribute('name', 'uncheck');
-//                 buttonCheckAll.innerHTML = 'Bỏ chọn tất cả';
-//                 doneCount = totalCount;
-//                 unDoneCount = 0;
-//             } else {
-//                 node.removeAttribute('checked');
-//                 buttonCheckAll.setAttribute('name', 'check');
-//                 buttonCheckAll.innerHTML = 'Chọn tất cả';
-//                 node.style.color = 'black';
-//                 unDoneCount = totalCount;
-//                 doneCount = 0;
-//             }
-//             updateDoneView();
-//         }
-//     } 
-// }
-// function updateDoneView() {
-//     document.getElementById('total').innerHTML = 'Tất Cả : ' + totalCount;
-//     document.getElementById('done').innerHTML = 'Đã hoàn thành : ' + doneCount;
-//     document.getElementById('undone').innerHTML = 'Chưa hoàn thành : ' + unDoneCount;
-// }
-// function searchTask() {
-//     let listTaskText = document.getElementById('mySearch').value;
-//     for (let i = 0; i <= content.length; i++) {
-//         if (listTaskText === content[i]) {
-//             console.log('co');
-//             return;
-//         }
-//     } alert('Không có công việc nào trùng');
-// }
