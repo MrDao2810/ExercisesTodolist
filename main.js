@@ -6,18 +6,11 @@ let storageKey = 'todoList';
 let owner;
 logout();
 
-// Check xem nếu trong trường hợp không có gì : null thì phải trở về string [] . vì nếu localStorage chỉ nhận string
+// Check xem nếu trong trường hợp không có gì: null thì phải trở về string []. vì nếu localStorage chỉ nhận string
 let todoList = JSON.parse(localStorage.getItem(storageKey)) ? JSON.parse(localStorage.getItem(storageKey)) : [];
 // Tạo 1 mảng để lưu những content !== với searchTasksContent
 let hiddenItemIndexes = [];
 updateView();
-
-function logout() {
-    owner = prompt('Nhập tên người dùng: ');
-    if (!owner) {
-        logout();
-    }
-}
 
 function updateView() {
     // Xoá dữ liệu cũ và update lại data từ updateTodoListView()
@@ -28,7 +21,6 @@ function updateView() {
 let pressEnterAdd = document.getElementById('myListContent');
 // Bắt sự kiện khi nhấn Enter
 pressEnterAdd.addEventListener('keypress', function(event) {
-    console.log('owner: ' + owner);
     if (event.key === 'Enter') {
         addContentElement();
     }
@@ -44,12 +36,12 @@ function updateTodoListView(task) {
             ++count;
         }
     }
-    taskCount.innerHTML ='Tất cả: ' + todoList.length;
+    taskCount.innerHTML = 'Tất cả: ' + todoList.length;
     taskDone.innerHTML = 'Đã hoàn thành: ' + count;
-    taskNotDone.innerHTML ='Chưa hoàn thành: ' + (todoList.length - count);
+    taskNotDone.innerHTML = 'Chưa hoàn thành: ' + (todoList.length - count);
     // Đếm độ dài của mảng todoList rồi check nếu check sang all sẽ hiện tất cả, done sẽ hiện đã làm, không thì ngược lại
     for (let i = 0; i < todoList.length; i++) {
-        // Tìm vị trí của i trong hiddenItemIndexes nếu !== -1 thì tiếp tục vòng lặp , có thì hiển thị nếu ko có thì ẩn đi
+        // Tìm vị trí của i trong hiddenItemIndexes nếu !== -1 thì tiếp tục vòng lặp, có thì hiển thị nếu ko có thì ẩn đi
         if (hiddenItemIndexes.indexOf(i) !== -1) {
             continue;
         }
@@ -61,14 +53,9 @@ function updateTodoListView(task) {
             addOneTaskView(todoList[i]);
         }
     }
-    
 }
 // Thêm một TaskView vào todoList
 function addOneTaskView(task) {
-    // !task check null, check task.value null, check task.value =''
-    // if (!task || !task.content || task.content === '') {
-    //     return;
-    // }
     let division = document.createElement('div');   // create div
     textNode = document.createTextNode(task.content); // create text node
     division.appendChild(textNode);
@@ -81,8 +68,7 @@ function addOneTaskView(task) {
     createBottomElement(division, task);
     createUpElement(division, task);
     createDownElement(division, task);
-    // updateCountTaskView();
-    
+    // updateCountTaskView();    
 }
 // Vô hiệu hóa button add nếu để trống.
 myDiv.addEventListener('input', () => {
@@ -108,7 +94,7 @@ function addContentElement() {
             return;
         }
     }
-    const newTask = {content: listTasksContent, status: false}
+    const newTask = {content: listTasksContent, status: false, owner: owner}
     todoList.push(newTask); 
     // delete giá trị thẻ input sau khi nhập
     document.getElementById('myListContent').value = '';
@@ -256,23 +242,7 @@ function createDownElement(division, task) {
         updateView();
     });
 }
-// Hiện tất cả các công việc đã thêm trong todolist
-// function updateDoneView() {
-//      
-//      document.getElementById('undone').innerHTML = 'Chưa hoàn thành ';
-// }
-// Đếm tổng số công việc | đã làm | chưa làm
-// function updateCountTaskView() {
-//     for (let i = 0; i <= todoList.length; i++) {
-//         if (i === todoList.length) {
-//             document.getElementById('total').innerHTML = 'Tất cả ' + i;
-//         } else {
-            
-//         }
-//     }
-// }
 
-// Hiện trạng thái công việc theo task 
 // Hiện tất cả công việc 
 function totalTaskElement() {
     currentTab = 'all';
@@ -337,4 +307,12 @@ function searchTask() {
         }
     }
     updateView();
+}
+// Thêm chức năng người dùng
+function logout() {
+    owner = prompt('Nhập tên người dùng: ');
+    document.getElementById('myOwner').innerHTML = 'Người dùng: ' + owner;
+    if (!owner) {
+        logout();
+    }
 }

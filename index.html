@@ -8,13 +8,19 @@
     <title>Todo List</title>
 </head>
 <body>
-    <button onclick="logout()">Đăng xuất</button>
     <div id="myDiv" class="header">
+        <div>
+            <!-- <button onclick="login()">Đăng nhập</button> -->
+            <button onclick="logout()">Đăng xuất</button>
+            <div id="myOwner"></div>
+        </div>
         <input type="search" id="mySearch" onkeyup="searchTask()" placeholder="Search task..">
         <div class="content-search" id="myContent"></div> </br>
-        <button id="total" onclick="totalTaskElement()"></button>
-        <button id="done" onclick="doneTaskElement()"></button>
-        <button id="notDone" onclick="notDoneTaskElement()"></button> </br>
+        <div>
+            <button id="total" onclick="totalTaskElement()"></button>
+            <button id="done" onclick="doneTaskElement()"></button>
+            <button id="notDone" onclick="notDoneTaskElement()"></button>
+        </div>
         <input type="text" class="mytext" id="myListContent">
         <button onclick="addContentElement()" disabled="disabled" class="addBtn" id="myBtn">Add</button>
         <div class="header-content" id="list-tasks-container"></div>
