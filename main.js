@@ -1,11 +1,10 @@
 const listTasksContainerElement = document.getElementById('list-tasks-container');
-const myTasksContainer = document.getElementById('list-tasks-container');
 let currentTab = 'all'; // done | undone
 let isCheckAll = true;
 let storageKey = 'todoList';
 let owner;
 let userFieldIndex = [];
-logout();
+login();
 
 // Check xem nếu trong trường hợp không có gì: null thì phải trở về string []. vì nếu localStorage chỉ nhận string
 let todoList = JSON.parse(localStorage.getItem(storageKey)) ? JSON.parse(localStorage.getItem(storageKey)) : [];
@@ -72,7 +71,7 @@ function addOneTaskView(task) {
     // updateCountTaskView();    
 }
 // Vô hiệu hóa button add nếu để trống.
-myDiv.addEventListener('input', () => {
+myDiv.addEventListener('input', function() {
     if (myListContent.value.length >= 1) {
         myBtn.removeAttribute('disabled');
     } else {
@@ -161,7 +160,6 @@ function createOnTopElement(division, task) {
     if (todoList.indexOf(task) === 0) {
         taskTopElement.disabled = true;
     }
-
     // Nếu click vào button thì sẽ đưa element lên trên đầu divison
     taskTopElement.addEventListener('click', function(){
         // Tìm vị trí của task trong todoList
@@ -207,7 +205,7 @@ function createUpElement(division, task) {
     division.prepend(taskUpElement);
     // Vô hiệu hoá Up khi tới vị trí trên cùng
     if (todoList.indexOf(task) === 0) {
-        taskUpElement.disabled = 'true';
+        taskUpElement.disabled = true;
     }
     // Bắt sự kiện button đưa element lên
     taskUpElement.addEventListener('click', function(){
@@ -284,13 +282,6 @@ function createRemoveAllTask() {
     updateView();
 }
 
-let pressEnterSearch = document.getElementById('mySearch');
-// Bắt sự kiện khi nhấn Enter
-pressEnterSearch.addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        searchTask();
-    }
-});
 // Search công việc 
 function searchTask() {
     hiddenItemIndexes = [];
@@ -310,10 +301,10 @@ function searchTask() {
     updateView();
 }
 // Thêm chức năng người dùng
-function logout() { 
+function login() { 
     owner = prompt('Nhập tên người dùng: ');
     document.getElementById('myOwner').innerHTML = 'Người dùng: ' + owner;
     if (!owner) {
-        logout();
+        login();
     }
 }
