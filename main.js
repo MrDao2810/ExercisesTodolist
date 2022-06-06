@@ -95,7 +95,7 @@ function addContentElement() {
         }
     }
     const newTask = {content: listTasksContent, status: false, owner: owner}
-    todoList.push(newTask); 
+    todoList.unshift(newTask); 
     // delete giá trị thẻ input sau khi nhập
     document.getElementById('myListContent').value = '';
     updateView(); 
@@ -258,7 +258,7 @@ function notDoneTaskElement() {
     updateView();
 }
 // Chọn tất cả các task và huỷ chọn
-function createAllCheckBox() {
+function createAllCheckBox(task) {
     const buttonCheckAll = document.getElementById('btn-check-all');
     for (let i = 0; i < todoList.length; i++) 
     {
@@ -270,7 +270,7 @@ function createAllCheckBox() {
         }
     }
     isCheckAll = !isCheckAll; // Nếu !isCheckAll (Tức false) thì todoList[i].status = false;
-    buttonCheckAll.innerHTML = isCheckAll ? 'Chọn tất cả' : 'Bỏ chọn tất cả';
+    buttonCheckAll.innerHTML = isCheckAll? 'Chọn tất cả' : 'Bỏ chọn tất cả';
     updateView();  
 }
 // Button xoá tất cả các task
@@ -303,7 +303,7 @@ function searchTask() {
 // Thêm chức năng người dùng
 function login() { 
     owner = prompt('Nhập tên người dùng: ');
-    document.getElementById('myOwner').innerHTML = 'Người dùng: ' + owner;
+    document.getElementById('myOwner').innerHTML = owner;
     if (!owner) {
         login();
     }
