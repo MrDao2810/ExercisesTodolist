@@ -30,3 +30,18 @@ body {
 .listText {
     margin-top: 30px;
 }
+.header-user {
+    text-align: center;
+}
+.header-user #myOwner{
+    margin-top: 10px;
+}
+.header .header-add input {
+    margin-top: 20px;
+}
+.header .header-content {
+    margin-top: 15px;
+}
+.header .header-full-task button {
+    margin-top: 10px;
+}

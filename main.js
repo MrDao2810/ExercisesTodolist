@@ -4,6 +4,7 @@ let currentTab = 'all'; // done | undone
 let isCheckAll = true;
 let storageKey = 'todoList';
 let owner;
+let userFieldIndex = [];
 logout();
 
 // Check xem nếu trong trường hợp không có gì: null thì phải trở về string []. vì nếu localStorage chỉ nhận string
@@ -56,7 +57,7 @@ function updateTodoListView(task) {
 }
 // Thêm một TaskView vào todoList
 function addOneTaskView(task) {
-    let division = document.createElement('div');   // create div
+    let division = document.createElement('div'); // create div
     textNode = document.createTextNode(task.content); // create text node
     division.appendChild(textNode);
     listTasksContainerElement.appendChild(division);
@@ -309,7 +310,7 @@ function searchTask() {
     updateView();
 }
 // Thêm chức năng người dùng
-function logout() {
+function logout() { 
     owner = prompt('Nhập tên người dùng: ');
     document.getElementById('myOwner').innerHTML = 'Người dùng: ' + owner;
     if (!owner) {
