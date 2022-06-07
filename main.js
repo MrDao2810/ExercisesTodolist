@@ -32,7 +32,7 @@ function updateTodoListView(task) {
     const taskDone = document.getElementById('done');
     const taskNotDone = document.getElementById('notDone');
     for (task of todoList) {
-        if(task.status) {
+        if (task.status) {
             ++count;
         }
     }
@@ -140,7 +140,7 @@ function createDeleteElement(division, task) {
     taskDelete.addEventListener('click', function(event) {
         // Nếu nhấn đồng ý (chắc chắn uốn xoá) thì sẽ chạy tiếp 
         const confirmation = confirm('Bạn có chắc chắn muốn xoá không');
-        if(!confirmation) return;
+        if (!confirmation) return;
         // Tìm vị trí của task trong todoList
         const taskIndex = todoList.indexOf(task);
         // Dùng Splice để xoá phần tử được xác định taskIndex trong mảng 
@@ -276,7 +276,7 @@ function createAllCheckBox(task) {
 // Button xoá tất cả các task
 function createRemoveAllTask() {
     const confirmation = confirm('Bạn có muốn xoá hết');
-    if(!confirmation) return;
+    if (!confirmation) return;
     // Xoá từ vị trí 0 đến vị trí cuối cùng (là độ dài mảng todoList.length) 
     todoList.splice(0, todoList.length);
     updateView();
