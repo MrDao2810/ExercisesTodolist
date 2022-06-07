@@ -113,7 +113,7 @@ function createStaticCheckBox(division, task) {
         division.style.color = 'black';
     }
     // Khi checkbox được click thì gọi hàm 
-    checkBox.addEventListener('change', function(e){
+    checkBox.addEventListener('change', function(e) {
         // Target Nhận phần tử cuối cùng khi click vào checkbox
         task.status = e.target.checked;
         const taskIndex = todoList.indexOf(task);
@@ -137,7 +137,7 @@ function createDeleteElement(division, task) {
     division.append(taskDelete);
     taskDelete.innerHTML = '🗑️';
     // Dùng addEventListener để add sự kiện cho đối tượng (Xoá division)
-    taskDelete.addEventListener('click', function(event){
+    taskDelete.addEventListener('click', function(event) {
         // Nếu nhấn đồng ý (chắc chắn uốn xoá) thì sẽ chạy tiếp 
         const confirmation = confirm('Bạn có chắc chắn muốn xoá không');
         if(!confirmation) return;
@@ -154,14 +154,14 @@ function createOnTopElement(division, task) {
     let taskTopElement = document.createElement('button');
     // Tên class của button
     taskTopElement.className = 'my-top-element';
-    taskTopElement.innerHTML = 'Top';
+    taskTopElement.innerHTML = '⯭';
     division.append(taskTopElement);
     // Nếu vị trí của phần tử === 0 thì taskTopElement true còn không thì trả về false
     if (todoList.indexOf(task) === 0) {
         taskTopElement.disabled = true;
     }
     // Nếu click vào button thì sẽ đưa element lên trên đầu divison
-    taskTopElement.addEventListener('click', function(){
+    taskTopElement.addEventListener('click', function() {
         // Tìm vị trí của task trong todoList
         const taskIndex = todoList.indexOf(task);
         // Dùng Splice để xoá phần tử được xác định taskIndex trong mảng 
@@ -178,14 +178,14 @@ function createBottomElement(division, task) {
     let taskBotElement = document.createElement('button');
     // Tên class của button
     taskBotElement.className = 'my-bot-element';
-    taskBotElement.innerHTML = 'Bot';
+    taskBotElement.innerHTML = '⯯';
     division.prepend(taskBotElement);
     // Vô hiệu hoá bottpom khi ở vị trí dưới cùng của todoList
     if (todoList.indexOf(task) === todoList.length - 1) {    
         taskBotElement.disabled = true;
     }
     // Bắt sự kiện button đưa element xuống cuối cùng
-    taskBotElement.addEventListener('click', function(){
+    taskBotElement.addEventListener('click', function() {
         // tìm vị trí của task trong todoList
         const taskIndex = todoList.indexOf(task);
         // Dùng Splice để xoá phần tử được xác định taskIndex trong mảng
@@ -201,14 +201,14 @@ function createUpElement(division, task) {
     let taskUpElement = document.createElement('button');
     // Tên class của button
     taskUpElement.className = 'my-before-element';
-    taskUpElement.innerHTML = 'Up';
+    taskUpElement.innerHTML = '⮭';
     division.prepend(taskUpElement);
     // Vô hiệu hoá Up khi tới vị trí trên cùng
     if (todoList.indexOf(task) === 0) {
         taskUpElement.disabled = true;
     }
     // Bắt sự kiện button đưa element lên
-    taskUpElement.addEventListener('click', function(){
+    taskUpElement.addEventListener('click', function() {
         // Tìm vị trí của task trong todoList
         const taskIndex = todoList.indexOf(task);
         // Dùng đảo vị trí của phần tử trong mảng
@@ -224,14 +224,14 @@ function createDownElement(division, task) {
     let taskDownElement = document.createElement('button');
     // Teen class cuar button
     taskDownElement.className = 'my-down-element';
-    taskDownElement.innerHTML = 'Down';
+    taskDownElement.innerHTML = '⮯';
     division.prepend(taskDownElement);
     // Vô hiệu hoá Down khi đi tới vị trí cuối cùng
     if (todoList.indexOf(task) === todoList.length - 1) {    
         taskDownElement.disabled = true;
     }
     // Bắt sự kiện button đưa element xuống
-    taskDownElement.addEventListener('click', function(){
+    taskDownElement.addEventListener('click', function() {
         // Tìm vị trí của task trong todoList
         const taskIndex = todoList.indexOf(task);
         // DÙng đảo vị trí của phần tử trong mảng

@@ -10,7 +10,6 @@
 <body>
     <div id="myDiv" class="header">
         <div class="header-user">
-            <!-- <button onclick="login()">Đăng nhập</button> -->
             <button onclick="login()">Người dùng</button>
             <div id="myOwner"></div>
         </div>
@@ -23,9 +22,9 @@
         </div>
         <div class="header-add">
             <input type="text" class="mytext" id="myListContent">
-            <button onclick="addContentElement()" disabled="disabled" class="addBtn" id="myBtn">Add</button>    
+            <button onclick="addContentElement()" disabled="disabled" class="addBtn" id="myBtn">Add</button> 
+            <div class="header-content" id="list-tasks-container"></div>   
         </div>
-        <div class="header-content" id="list-tasks-container"></div>
         <div class="header-full-task">
             <button type="button" name="check" id="btn-check-all" class="allBtn" onclick="createAllCheckBox()">Chọn tất cả</button>
             <button type="button" id="btn-remove-task" class="removeAllBtn" onclick="createRemoveAllTask()">Xoá tất cả</button>       

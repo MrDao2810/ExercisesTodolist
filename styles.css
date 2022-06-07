@@ -4,34 +4,49 @@ body {
 .header {
     margin-top: 30px;    
 }
-.header .addBtn:active {
-    background-color: rgb(165, 165, 165);
+.header button:hover {
+    background-color: rgb(82, 94, 100);
+}
+.header-content input{
+    box-sizing: border-box;
 }
 .header-content .my-delete-element{
+    margin-top: 5px;
+    font-size: 15px;
+    padding: 3px 15px;
     left: 300px;    
     position: absolute;
 }
 .header-content .my-top-element{
-    left: 340px;
+    margin-top: 5px;
+    font-size: 18px;
+    padding: 1px 15px;
+    left: 365px;
     position: absolute;
 }
 .header-content .my-bot-element{
-    left: 385px;
+    margin-top: 5px;
+    font-size: 18px;
+    padding: 1px 15px;
+    left: 420px;
     position: absolute;
 }
 .header-content .my-before-element{
-    left: 430px;
+    margin-top: 5px;
+    font-size: 18px;
+    padding: 1px 15px;
+    left: 475px;
     position: absolute;
 }
 .header-content .my-down-element{
-    left: 470px;
+    margin-top: 5px;
+    font-size: 18px;
+    padding: 1px 15px;
+    left: 533px;
     position: absolute;
 }
 .listText {
     margin-top: 30px;
-}
-.header-user {
-    text-align: center;
 }
 .header-user #myOwner{
     margin-top: 10px;
@@ -39,8 +54,11 @@ body {
 .header .header-add input {
     margin-top: 20px;
 }
+.header #mySearch {
+    margin-top: 10px;
+}
 .header .header-content {
-    margin-top: 15px;
+    margin-top: 25px;
 }
 .header .header-full-task button {
     margin-top: 10px;
