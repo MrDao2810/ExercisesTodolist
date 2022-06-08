@@ -105,6 +105,18 @@ function addContentElement() {
     // delete giá trị thẻ input sau khi nhập
     document.getElementById('myListContent').value = '';
     updateView(); 
+}
+// Chọn tất cả các task và huỷ chọn
+function createAllCheckBox() {
+    for (let i = 0; i < todoList.length; i++) {
+        if (isCheckAll) { // Nếu là isCheckAll (Tức true) thì todoList[i].status = true;
+            todoList[i].status = true;
+        } else {
+            todoList[i].status = false;
+        }
+    }
+    isCheckAll = !isCheckAll; // Nếu !isCheckAll (Tức false) thì todoList[i].status = false;
+    updateView();  
 }    
 // Tạo checkbox
 function createStaticCheckBox(division, task) {
@@ -122,6 +134,9 @@ function createStaticCheckBox(division, task) {
     checkBox.addEventListener('change', function(e) {
         // Target Nhận phần tử cuối cùng khi click vào checkbox
         task.status = e.target.checked;
+        if (!task.status) {
+            document.getElementById('btn-check-all').checked = false;
+        }
         const taskIndex = todoList.indexOf(task);
         todoList.splice(taskIndex, 1);
         if (task.status) {
@@ -144,7 +159,7 @@ function createDeleteElement(division, task) {
     taskDelete.innerHTML = '🗑️';
     // Dùng addEventListener để add sự kiện cho đối tượng (Xoá division)
     taskDelete.addEventListener('click', function(event) {
-        // Nếu nhấn đồng ý (chắc chắn uốn xoá) thì sẽ chạy tiếp 
+        // Nếu nhấn đồng ý (chắc chắn muốn xoá) thì sẽ chạy tiếp 
         const confirmation = confirm('Are you sure you want to delete ?');
         if (!confirmation) return;
         // Tìm vị trí của task trong todoList
@@ -263,20 +278,6 @@ function notDoneTaskElement() {
     currentTab = 'undone';
     updateView();
 }
-// Chọn tất cả các task và huỷ chọn
-function createAllCheckBox() {
-    for (let i = 0; i < todoList.length; i++) 
-    {
-        if (isCheckAll)  // Nếu là isCheckAll (Tức true) thì todoList[i].status = true;
-        {
-            todoList[i].status = true;
-        } else {
-            todoList[i].status = false;
-        }
-    }
-    isCheckAll = !isCheckAll; // Nếu !isCheckAll (Tức false) thì todoList[i].status = false;
-    updateView();  
-}
 // Button xoá tất cả các task
 function createRemoveAllTask() {
     const confirmation = confirm('Do you want to delete out ?');
@@ -285,7 +286,6 @@ function createRemoveAllTask() {
     todoList.splice(0, todoList.length);
     updateView();
 }
-
 // Search công việc 
 function searchTask() {
     hiddenItemIndexes = [];
