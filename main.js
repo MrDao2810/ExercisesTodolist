@@ -4,7 +4,7 @@ let isCheckAll = true;
 let storageKey = 'todoList';
 let owner;
 let userFieldIndex = [];
-login();
+// login();
 
 // Check xem nếu trong trường hợp không có gì: null thì phải trở về string []. vì nếu localStorage chỉ nhận string
 let todoList = JSON.parse(localStorage.getItem(storageKey)) ? JSON.parse(localStorage.getItem(storageKey)) : [];
@@ -36,20 +36,26 @@ function updateTodoListView(task) {
             ++count;
         }
     }
-    taskCount.innerHTML = 'Tất cả: ' + todoList.length;
-    taskDone.innerHTML = 'Đã hoàn thành: ' + count;
-    taskNotDone.innerHTML = 'Chưa hoàn thành: ' + (todoList.length - count);
+    taskCount.innerHTML = 'Total: ' + todoList.length;
+    taskDone.innerHTML = 'Done: ' + count;
+    taskNotDone.innerHTML = 'Not Done: ' + (todoList.length - count);
+    taskCount.removeAttribute('class');
+    taskDone.removeAttribute('class');
+    taskNotDone.removeAttribute('class');
     // Đếm độ dài của mảng todoList rồi check nếu check sang all sẽ hiện tất cả, done sẽ hiện đã làm, không thì ngược lại
     for (let i = 0; i < todoList.length; i++) {
-        // Tìm vị trí của i trong hiddenItemIndexes nếu !== -1 thì tiếp tục vòng lặp, có thì hiển thị nếu ko có thì ẩn đi
+        // Tìm vị trí của i trong hiddenItemIndexes nếu !== -1 thì tiếp tục, có thì hiển thị nếu ko có thì ẩn đi
         if (hiddenItemIndexes.indexOf(i) !== -1) {
             continue;
         }
         if (currentTab === 'done' && todoList[i].status) {
+            taskDone.setAttribute('class', 'taskColor');
             addOneTaskView(todoList[i]);
         } else if (currentTab === 'undone' && !todoList[i].status) {
+            taskNotDone.setAttribute('class', 'taskColor');
             addOneTaskView(todoList[i]);
         } else if (currentTab === 'all') {
+            taskCount.setAttribute('class', 'taskColor');
             addOneTaskView(todoList[i]);
         }
     }
@@ -80,8 +86,8 @@ myDiv.addEventListener('input', function() {
 });
 function addContentElement() {
     let listTasksContent = document.getElementById('myListContent').value;
-    //Nếu input rỗng thì button add sẽ không hoạt động
-    if (listTasksContent === '') {
+    //Nếu input rỗng Hoặc nhập nguyên dấu cách thì button add sẽ không hoạt động
+    if (listTasksContent === '' || !listTasksContent.trim()) {
         alert('Lỗi. Nhập lại');
         return;
     }
@@ -139,7 +145,7 @@ function createDeleteElement(division, task) {
     // Dùng addEventListener để add sự kiện cho đối tượng (Xoá division)
     taskDelete.addEventListener('click', function(event) {
         // Nếu nhấn đồng ý (chắc chắn uốn xoá) thì sẽ chạy tiếp 
-        const confirmation = confirm('Bạn có chắc chắn muốn xoá không');
+        const confirmation = confirm('Are you sure you want to delete ?');
         if (!confirmation) return;
         // Tìm vị trí của task trong todoList
         const taskIndex = todoList.indexOf(task);
@@ -154,7 +160,7 @@ function createOnTopElement(division, task) {
     let taskTopElement = document.createElement('button');
     // Tên class của button
     taskTopElement.className = 'my-top-element';
-    taskTopElement.innerHTML = '⯭';
+    taskTopElement.innerHTML = '⊼';
     division.append(taskTopElement);
     // Nếu vị trí của phần tử === 0 thì taskTopElement true còn không thì trả về false
     if (todoList.indexOf(task) === 0) {
@@ -178,7 +184,7 @@ function createBottomElement(division, task) {
     let taskBotElement = document.createElement('button');
     // Tên class của button
     taskBotElement.className = 'my-bot-element';
-    taskBotElement.innerHTML = '⯯';
+    taskBotElement.innerHTML = '⊻';
     division.prepend(taskBotElement);
     // Vô hiệu hoá bottpom khi ở vị trí dưới cùng của todoList
     if (todoList.indexOf(task) === todoList.length - 1) {    
@@ -201,7 +207,7 @@ function createUpElement(division, task) {
     let taskUpElement = document.createElement('button');
     // Tên class của button
     taskUpElement.className = 'my-before-element';
-    taskUpElement.innerHTML = '⮭';
+    taskUpElement.innerHTML = '⇧';
     division.prepend(taskUpElement);
     // Vô hiệu hoá Up khi tới vị trí trên cùng
     if (todoList.indexOf(task) === 0) {
@@ -224,7 +230,7 @@ function createDownElement(division, task) {
     let taskDownElement = document.createElement('button');
     // Teen class cuar button
     taskDownElement.className = 'my-down-element';
-    taskDownElement.innerHTML = '⮯';
+    taskDownElement.innerHTML = '⇩';
     division.prepend(taskDownElement);
     // Vô hiệu hoá Down khi đi tới vị trí cuối cùng
     if (todoList.indexOf(task) === todoList.length - 1) {    
@@ -258,8 +264,7 @@ function notDoneTaskElement() {
     updateView();
 }
 // Chọn tất cả các task và huỷ chọn
-function createAllCheckBox(task) {
-    const buttonCheckAll = document.getElementById('btn-check-all');
+function createAllCheckBox() {
     for (let i = 0; i < todoList.length; i++) 
     {
         if (isCheckAll)  // Nếu là isCheckAll (Tức true) thì todoList[i].status = true;
@@ -270,12 +275,11 @@ function createAllCheckBox(task) {
         }
     }
     isCheckAll = !isCheckAll; // Nếu !isCheckAll (Tức false) thì todoList[i].status = false;
-    buttonCheckAll.innerHTML = isCheckAll? 'Chọn tất cả' : 'Bỏ chọn tất cả';
     updateView();  
 }
 // Button xoá tất cả các task
 function createRemoveAllTask() {
-    const confirmation = confirm('Bạn có muốn xoá hết');
+    const confirmation = confirm('Do you want to delete out ?');
     if (!confirmation) return;
     // Xoá từ vị trí 0 đến vị trí cuối cùng (là độ dài mảng todoList.length) 
     todoList.splice(0, todoList.length);
@@ -301,10 +305,10 @@ function searchTask() {
     updateView();
 }
 // Thêm chức năng người dùng
-function login() { 
-    owner = prompt('Nhập tên người dùng: ');
-    document.getElementById('myOwner').innerHTML = owner;
-    if (!owner) {
-        login();
-    }
-}
+// function login() { 
+//     owner = prompt('Nhập tên người dùng: ');
+//     document.getElementById('myOwner').innerHTML = owner;
+//     if (!owner) {
+//         login();
+//     }
+// }

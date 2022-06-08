@@ -4,8 +4,14 @@ body {
 .header {
     margin-top: 30px;    
 }
+.header-add .header-content div:hover {
+    background-color: rgb(195, 218, 218);
+}
 .header button:hover {
     background-color: rgb(82, 94, 100);
+}
+.taskColor {
+    background-color: aquamarine;
 }
 .header-content input{
     box-sizing: border-box;
