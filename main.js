@@ -1,9 +1,10 @@
 const listTasksContainerElement = document.getElementById('list-tasks-container');
 let currentTab = 'all'; // done | undone
-let isCheckAll = true;
+
 let storageKey = 'todoList';
 let owner;
 let userFieldIndex = [];
+let isCheckAll = true;
 // login();
 
 // Check xem nếu trong trường hợp không có gì: null thì phải trở về string []. vì nếu localStorage chỉ nhận string
@@ -114,8 +115,9 @@ function createAllCheckBox() {
         } else {
             todoList[i].status = false;
         }
-    }
-    isCheckAll = !isCheckAll; // Nếu !isCheckAll (Tức false) thì todoList[i].status = false;
+    } 
+    isCheckAll = !isCheckAll;
+    // Nếu !isCheckAll (Tức false) thì todoList[i].status = false;
     updateView();  
 }    
 // Tạo checkbox
@@ -136,6 +138,7 @@ function createStaticCheckBox(division, task) {
         task.status = e.target.checked;
         if (!task.status) {
             document.getElementById('btn-check-all').checked = false;
+            isCheckAll = true;
         }
         const taskIndex = todoList.indexOf(task);
         todoList.splice(taskIndex, 1);
@@ -312,3 +315,4 @@ function searchTask() {
 //         login();
 //     }
 // }
+

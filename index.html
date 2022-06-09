@@ -23,7 +23,7 @@
         <div class="header-add">
             <input type="text" class="mytext" id="myListContent">
             <button onclick="addContentElement()" disabled="disabled" class="addBtn" id="myBtn">Add</button> <br>
-            <input type="checkbox" id="btn-check-all" class="allBtn" onclick="createAllCheckBox()">Check All</input>
+            <input type="checkbox" id="btn-check-all" class="allBtn" onchange="createAllCheckBox(this)">Check all
             <div onclick="taskDataElement()" class="header-content" id="list-tasks-container"></div>   
         </div>
         <div class="header-full-task">
