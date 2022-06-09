@@ -10,7 +10,7 @@ body {
 .header button:hover {
     background-color: rgb(82, 94, 100);
 }
-.taskColor {
+.tabColor {
     background-color: aquamarine;
 }
 .header-content input{
@@ -20,35 +20,35 @@ body {
     margin-top: 5px;
     font-size: 15px;
     padding: 3px 15px;
-    left: 300px;    
+    left: 400px;    
     position: absolute;
 }
 .header-content .my-top-element{
     margin-top: 5px;
     font-size: 18px;
     padding: 1px 15px;
-    left: 365px;
+    left: 465px;
     position: absolute;
 }
 .header-content .my-bot-element{
     margin-top: 5px;
     font-size: 18px;
     padding: 1px 15px;
-    left: 420px;
+    left: 520px;
     position: absolute;
 }
 .header-content .my-before-element{
     margin-top: 5px;
     font-size: 18px;
     padding: 1px 15px;
-    left: 475px;
+    left: 575px;
     position: absolute;
 }
 .header-content .my-down-element{
     margin-top: 5px;
     font-size: 18px;
     padding: 1px 15px;
-    left: 533px;
+    left: 633px;
     position: absolute;
 }
 .listText {
