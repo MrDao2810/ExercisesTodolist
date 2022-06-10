@@ -262,10 +262,24 @@ function createStaticCheckBox(division, task) {
     checkBox.addEventListener('change', function(e) {
         // Target Nhận phần tử cuối cùng khi click vào checkbox
         task.status = e.target.checked;
+        // Nếu có 1 checkBox trong todoList = false(task.status = false) thì checkAll === false;
         if (!task.status) {
-            document.getElementById('btn-check-all').checked = false;
+            document.getElementById('check-all').checked = false;
+            // Nếu checkAll = false thì thằng isCheckAll phải bằng lại true
             isCheckAll = true;
         }
+        // Đặt 1 biến mới isAllChecked = true
+        let isAllChecked = true;
+        // dùng vòng lặp for đếm. Dùng if đăt điều kiện nếu checkBox trong todoList = false thì isAllChecked = false đổi lại ischeckAll = false;
+        for ( let i = 0; i < todoList.length; i++) {
+            if (!todoList[i].status) {
+                isAllChecked = false;
+                break;
+            }
+        }
+        // Dùng toán tử 3 ngôi để đặt checkAll = true or false 
+        document.getElementById('check-all').checked = isAllChecked ? true : false;
+
         const taskIndex = todoList.indexOf(task);
         todoList.splice(taskIndex, 1);
         if (task.status) {
